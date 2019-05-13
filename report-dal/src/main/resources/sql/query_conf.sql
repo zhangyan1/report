@@ -15,4 +15,4 @@ CREATE TABLE `report_conf` (
   `flag` bigint not null DEFAULT 0 comment '标位 1-是否多选',
   PRIMARY KEY (`id`),
   key `uk_report_query` (`report_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='数据库配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='报表模板查询参数配置表';

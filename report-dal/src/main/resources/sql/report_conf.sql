@@ -10,4 +10,4 @@ CREATE TABLE `report_conf` (
   `source_id` bigint not null comment '数据库源id',
   PRIMARY KEY (`id`),
   key `uk_report_conf` (`source_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='数据库配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='报表模板配置表';
