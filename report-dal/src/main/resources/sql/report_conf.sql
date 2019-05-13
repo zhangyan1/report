@@ -3,6 +3,8 @@ CREATE TABLE `report_conf` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `gmt_create`   datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
+  `create_user_id` bigint not null comment '创建者uid',
+  `create_user_name` varchar(64) not null comment '创建者姓名',
   `status` int(1)  NOT NULL COMMENT '删除状态 1-正常 0-删除',
   `type` int(1) not null comment '类型 1-sql配置 2-表名',
   `sql_text` text not null comment 'sql文案',
