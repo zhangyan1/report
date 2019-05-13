@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `report_conf`;
-CREATE TABLE `report_conf` (
+DROP TABLE IF EXISTS `meta_param_conf`;
+CREATE TABLE `meta_param_conf` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `gmt_create`   datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,

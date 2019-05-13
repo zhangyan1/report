@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `column_conf`;
-CREATE TABLE `column_conf` (
+DROP TABLE IF EXISTS `meta_column_conf`;
+CREATE TABLE `meta_column_conf` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `gmt_create`   datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
