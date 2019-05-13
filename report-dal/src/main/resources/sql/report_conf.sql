@@ -4,10 +4,11 @@ CREATE TABLE `report_conf` (
   `gmt_create`   datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
   `status` int(1)  NOT NULL COMMENT '删除状态 1-正常 0-删除',
-  `type` int(1) not null comment '1-完整sql执行 2-配置表名选择字段',
+  `type` int(1) not null comment '类型 1-sql配置 2-表名',
   `sql_text` text not null comment 'sql文案',
-  `max_count` BIGINT not null DEFAULT '200' comment '查询条数',
+  `max_count` BIGINT not null DEFAULT '200' comment '最大条数',
   `source_id` bigint not null comment '数据库源id',
+  `flag` bigint not null DEFAULT 0 COMMENT '扩展标位 1-需要审核',
   PRIMARY KEY (`id`),
   key `uk_report_conf` (`source_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='报表模板配置表';
