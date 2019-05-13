@@ -13,5 +13,6 @@ CREATE TABLE `report_conf` (
   `report_id` bigint not null comment '报表配置主键id',
   `data_source_id` bigint DEFAULT  null comment '动态获取时数据源id',
   `flag` bigint not null DEFAULT 0 comment '标位 1-是否多选',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  key `uk_report_query` (`report_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='数据库配置表';

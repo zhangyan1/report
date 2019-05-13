@@ -13,5 +13,5 @@ CREATE TABLE `column_conf` (
   `data_type` int(1) not null DEFAULT 0 comment '数据类型 0-文本 1-数字 2-json对象',
   `json_column` text DEFAULT null comment 'json对象里面相关字段',
   PRIMARY KEY (`id`),
-  key (`report_id`)
+  key `uk_report_column` (`report_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='数据库配置表';
