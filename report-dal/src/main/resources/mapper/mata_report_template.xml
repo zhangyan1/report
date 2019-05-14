@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinemo.report.dal.mapper.MataReportTemplateMapper">
+
+	<!-- 结果集对应关系 -->
+	<resultMap id="result" type="com.shinemo.report.client.domain.MataReportTemplate" >
+		<id column="id" property="id"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createUserName" column="create_user_name"/>
+		<result property="status" column="status"/>
+		<result property="type" column="type"/>
+		<result property="sqlText" column="sql_text"/>
+		<result property="maxCount" column="max_count"/>
+		<result property="sourceId" column="source_id"/>
+		<result property="flag" column="flag"/>
+	</resultMap>
+
+	<!-- 数据库字段 -->
+	<sql id="columns">
+		id, gmt_create, gmt_modified, create_user_id, create_user_name, status, type, sql_text, max_count, source_id, flag
+	</sql>
+
+    <sql id="table">
+        mata_report_template
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="conditions">
+        <where>
+            <choose>
+                <when test="id != null">and id = #{id}</when>
+                <otherwise>
+					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+					<if test="createUserId != null">and create_user_id = #{createUserId}</if>
+					<if test="createUserName != null">and create_user_name = #{createUserName}</if>
+					<if test="status != null">and status = #{status}</if>
+					<if test="type != null">and type = #{type}</if>
+					<if test="sqlText != null">and sql_text = #{sqlText}</if>
+					<if test="maxCount != null">and max_count = #{maxCount}</if>
+					<if test="sourceId != null">and source_id = #{sourceId}</if>
+					<if test="flag != null">and flag = #{flag}</if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+
+	<!-- 查询结果集 -->
+    <select id="find" resultMap="result"
+            parameterType="com.shinemo.report.client.query.MataReportTemplateQuery">
+        select
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        <include refid="conditions"/>
+        <if test="orderByEnable and orderByList != null and orderByList.size() > 0">
+            order by
+            <foreach collection="orderByList" item="orderBy" separator=",">
+                ${orderBy.column} ${orderBy.sort}
+            </foreach>
+        </if>
+        <if test="pageEnable">
+            limit #{startRow}, #{pageSize}
+        </if>
+    </select>
+
+	<!-- 查询某条记录 -->
+    <select id="get" resultMap="result" parameterType="com.shinemo.report.client.query.MataReportTemplateQuery">
+        select
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        <include refid="conditions"/>
+        limit 1
+    </select>
+
+	<!-- 统计查询结果数量 -->
+    <select id="count" resultType="long" parameterType="com.shinemo.report.client.query.MataReportTemplateQuery">
+        select count(*) from
+        <include refid="table"/>
+        <include refid="conditions"/>
+    </select>
+
+	<!-- 删除 -->
+    <delete id="delete" parameterType="com.shinemo.report.client.query.MataReportTemplateQuery">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
+	<!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.shinemo.report.client.domain.MataReportTemplate">
+        insert into
+        <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						id,
+					</if>
+					gmt_create,
+					gmt_modified,
+                    <if test="createUserId != null">
+						create_user_id,
+					</if>
+                    <if test="createUserName != null">
+						create_user_name,
+					</if>
+                    <if test="status != null">
+						status,
+					</if>
+                    <if test="type != null">
+						type,
+					</if>
+                    <if test="sqlText != null">
+						sql_text,
+					</if>
+                    <if test="maxCount != null">
+						max_count,
+					</if>
+                    <if test="sourceId != null">
+						source_id,
+					</if>
+                    <if test="flag != null">
+						flag,
+					</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						#{id, jdbcType=BIGINT},
+                    </if>
+                    now(),
+                    now(),
+                    <if test="createUserId != null">
+						#{createUserId, jdbcType=BIGINT},
+                    </if>
+                    <if test="createUserName != null">
+						#{createUserName, jdbcType=VARCHAR},
+                    </if>
+                    <if test="status != null">
+						#{status, jdbcType=INTEGER},
+                    </if>
+                    <if test="type != null">
+						#{type, jdbcType=INTEGER},
+                    </if>
+                    <if test="sqlText != null">
+						#{sqlText, jdbcType=LONGVARCHAR},
+                    </if>
+                    <if test="maxCount != null">
+						#{maxCount, jdbcType=BIGINT},
+                    </if>
+                    <if test="sourceId != null">
+						#{sourceId, jdbcType=BIGINT},
+                    </if>
+                    <if test="flag != null">
+						#{flag, jdbcType=BIGINT},
+                    </if>
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.shinemo.report.client.domain.MataReportTemplate">
+        UPDATE mata_report_template
+        <set>
+            gmt_modified = now(),
+            <if test="createUserId != null">
+                create_user_id = #{createUserId, jdbcType=BIGINT},
+            </if>
+            <if test="createUserName != null">
+                create_user_name = #{createUserName, jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status, jdbcType=INTEGER},
+            </if>
+            <if test="type != null">
+                type = #{type, jdbcType=INTEGER},
+            </if>
+            <if test="sqlText != null">
+                sql_text = #{sqlText, jdbcType=LONGVARCHAR},
+            </if>
+            <if test="maxCount != null">
+                max_count = #{maxCount, jdbcType=BIGINT},
+            </if>
+            <if test="sourceId != null">
+                source_id = #{sourceId, jdbcType=BIGINT},
+            </if>
+            <if test="flag != null">
+                flag = #{flag, jdbcType=BIGINT}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

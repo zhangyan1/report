@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shinemo.report.dal.mapper.MetaColumnConfMapper">
+
+	<!-- 结果集对应关系 -->
+	<resultMap id="result" type="com.shinemo.report.client.domain.MetaColumnConf" >
+		<id column="id" property="id"/>
+		<result property="gmtCreate" column="gmt_create"/>
+		<result property="gmtModified" column="gmt_modified"/>
+		<result property="reportId" column="report_id"/>
+		<result property="mainColumnName" column="main_column_name"/>
+		<result property="columnName" column="column_name"/>
+		<result property="columnShowName" column="column_show_name"/>
+		<result property="columnType" column="column_type"/>
+		<result property="weight" column="weight"/>
+		<result property="sortType" column="sort_type"/>
+		<result property="dataType" column="data_type"/>
+		<result property="jsonColumn" column="json_column"/>
+	</resultMap>
+
+	<!-- 数据库字段 -->
+	<sql id="columns">
+		id, gmt_create, gmt_modified, report_id, main_column_name, column_name, column_show_name, column_type, weight, sort_type, data_type, json_column
+	</sql>
+
+    <sql id="table">
+        meta_column_conf
+    </sql>
+
+    <!-- 查询条件 -->
+    <sql id="conditions">
+        <where>
+            <choose>
+                <when test="id != null">and id = #{id}</when>
+                <otherwise>
+					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
+					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
+					<if test="reportId != null">and report_id = #{reportId}</if>
+					<if test="mainColumnName != null">and main_column_name = #{mainColumnName}</if>
+					<if test="columnName != null">and column_name = #{columnName}</if>
+					<if test="columnShowName != null">and column_show_name = #{columnShowName}</if>
+					<if test="columnType != null">and column_type = #{columnType}</if>
+					<if test="weight != null">and weight = #{weight}</if>
+					<if test="sortType != null">and sort_type = #{sortType}</if>
+					<if test="dataType != null">and data_type = #{dataType}</if>
+					<if test="jsonColumn != null">and json_column = #{jsonColumn}</if>
+                </otherwise>
+            </choose>
+        </where>
+    </sql>
+
+
+	<!-- 查询结果集 -->
+    <select id="find" resultMap="result"
+            parameterType="com.shinemo.report.client.query.MetaColumnConfQuery">
+        select
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        <include refid="conditions"/>
+        <if test="orderByEnable and orderByList != null and orderByList.size() > 0">
+            order by
+            <foreach collection="orderByList" item="orderBy" separator=",">
+                ${orderBy.column} ${orderBy.sort}
+            </foreach>
+        </if>
+        <if test="pageEnable">
+            limit #{startRow}, #{pageSize}
+        </if>
+    </select>
+
+	<!-- 查询某条记录 -->
+    <select id="get" resultMap="result" parameterType="com.shinemo.report.client.query.MetaColumnConfQuery">
+        select
+        <include refid="columns"/>
+        from
+        <include refid="table"/>
+        <include refid="conditions"/>
+        limit 1
+    </select>
+
+	<!-- 统计查询结果数量 -->
+    <select id="count" resultType="long" parameterType="com.shinemo.report.client.query.MetaColumnConfQuery">
+        select count(*) from
+        <include refid="table"/>
+        <include refid="conditions"/>
+    </select>
+
+	<!-- 删除 -->
+    <delete id="delete" parameterType="com.shinemo.report.client.query.MetaColumnConfQuery">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
+	<!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.shinemo.report.client.domain.MetaColumnConf">
+        insert into
+        <include refid="table"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						id,
+					</if>
+					gmt_create,
+					gmt_modified,
+                    <if test="reportId != null">
+						report_id,
+					</if>
+                    <if test="mainColumnName != null">
+						main_column_name,
+					</if>
+                    <if test="columnName != null">
+						column_name,
+					</if>
+                    <if test="columnShowName != null">
+						column_show_name,
+					</if>
+                    <if test="columnType != null">
+						column_type,
+					</if>
+                    <if test="weight != null">
+						weight,
+					</if>
+                    <if test="sortType != null">
+						sort_type,
+					</if>
+                    <if test="dataType != null">
+						data_type,
+					</if>
+                    <if test="jsonColumn != null">
+						json_column,
+					</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+                    <if test="id != null">
+						#{id, jdbcType=BIGINT},
+                    </if>
+                    now(),
+                    now(),
+                    <if test="reportId != null">
+						#{reportId, jdbcType=BIGINT},
+                    </if>
+                    <if test="mainColumnName != null">
+						#{mainColumnName, jdbcType=VARCHAR},
+                    </if>
+                    <if test="columnName != null">
+						#{columnName, jdbcType=VARCHAR},
+                    </if>
+                    <if test="columnShowName != null">
+						#{columnShowName, jdbcType=VARCHAR},
+                    </if>
+                    <if test="columnType != null">
+						#{columnType, jdbcType=INTEGER},
+                    </if>
+                    <if test="weight != null">
+						#{weight, jdbcType=INTEGER},
+                    </if>
+                    <if test="sortType != null">
+						#{sortType, jdbcType=INTEGER},
+                    </if>
+                    <if test="dataType != null">
+						#{dataType, jdbcType=INTEGER},
+                    </if>
+                    <if test="jsonColumn != null">
+						#{jsonColumn, jdbcType=LONGVARCHAR},
+                    </if>
+        </trim>
+    </insert>
+
+    <!-- 更新 -->
+    <update id="update" parameterType="com.shinemo.report.client.domain.MetaColumnConf">
+        UPDATE meta_column_conf
+        <set>
+            gmt_modified = now(),
+            <if test="reportId != null">
+                report_id = #{reportId, jdbcType=BIGINT},
+            </if>
+            <if test="mainColumnName != null">
+                main_column_name = #{mainColumnName, jdbcType=VARCHAR},
+            </if>
+            <if test="columnName != null">
+                column_name = #{columnName, jdbcType=VARCHAR},
+            </if>
+            <if test="columnShowName != null">
+                column_show_name = #{columnShowName, jdbcType=VARCHAR},
+            </if>
+            <if test="columnType != null">
+                column_type = #{columnType, jdbcType=INTEGER},
+            </if>
+            <if test="weight != null">
+                weight = #{weight, jdbcType=INTEGER},
+            </if>
+            <if test="sortType != null">
+                sort_type = #{sortType, jdbcType=INTEGER},
+            </if>
+            <if test="dataType != null">
+                data_type = #{dataType, jdbcType=INTEGER},
+            </if>
+            <if test="jsonColumn != null">
+                json_column = #{jsonColumn, jdbcType=LONGVARCHAR}
+            </if>
+        </set>
+        WHERE
+        id = #{id}
+    </update>
+</mapper>

@@ -28,12 +28,6 @@ public class ShineMoProperties {
     @NotNull
     private Application application;
     /**
-     * jce 相关配置
-     */
-    @Valid
-    @NotNull
-    private Jce jce;
-    /**
      * 通知邮箱列表
      */
     @NotNull
@@ -68,106 +62,5 @@ public class ShineMoProperties {
          */
         @NotNull
         private String domain;
-    }
-
-    /**
-     * jce 相关配置
-     *
-     * @author zhangyan
-     * @date 2019-05-10
-     **/
-    @Data
-    public static class Jce {
-        /**
-         * center 相关配置
-         */
-        @Valid
-        @NotNull
-        private Center center;
-        /**
-         * provider 相关配置
-         */
-        @Valid
-        @NotNull
-        private Provider provider;
-        /**
-         * consumer 相关配置
-         */
-        @Valid
-        @NotNull
-        private Consumer consumer;
-    }
-
-    /**
-     * center 相关配置
-     *
-     * @author zhangyan
-     * @date 2019-05-10
-     **/
-    @Data
-    public static class Center {
-        /**
-         * center host
-         */
-        @NotNull
-        private String host;
-    }
-
-    /**
-     * provider 相关配置
-     *
-     * @author zhangyan
-     * @date 2019-05-10
-     */
-    @Data
-    public static class Provider {
-        /**
-         * 监听端口号
-         */
-        private Integer port;
-        /**
-         * proxy
-         */
-        private String proxy;
-    }
-
-    /**
-     * consumer 相关配置
-     *
-     * @author zhangyan
-     * @date 2019-05-10
-     */
-    @Data
-    public static class Consumer {
-        /**
-         * url 和 urlMap 二选一
-         */
-        @NotNull
-        private String url;
-        /**
-         * url 和 urlMap 二选一
-         */
-        private Map<String, String> urlMap;
-        /**
-         * consumer proxy
-         */
-        @Valid
-        @NotNull
-        private Proxy proxy;
-    }
-
-    /**
-     * consumer proxy
-     *
-     * @author zhangyan
-     * @date 2019-05-10
-     **/
-    @Data
-    public static class Proxy {
-        /**
-         * entpay 的 proxy
-         */
-        @NotNull
-        private String entpay;
     }
 }

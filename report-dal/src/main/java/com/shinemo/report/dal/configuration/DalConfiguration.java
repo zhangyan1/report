@@ -18,10 +18,10 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan(basePackages = {
-        "com.shinemo.report.dal.user.mapper",
+        "com.shinemo.report.dal.base.conf.mapper",
 })
 @ComponentScan(basePackages = {
-        "com.shinemo.report.dal.user.wrapper",
+        "com.shinemo.report.dal.base.conf.wrapper",
 })
 @EnableTransactionManagement(proxyTargetClass = true)
 public class DalConfiguration {
