@@ -29,6 +29,7 @@ public class Application extends SpringBootServletInitializer {
         // app_env 在 10.0.10.42 的 publish.site 表中
         // -Dapp_env=-1 -Dconfig_url=http://10.0.10.62/myconf/conf/dispatch -Dapp_name=report
         // java -Dapp_env=-1 -Dconfig_url=http://10.0.10.62/myconf/conf/dispatch -Dapp_name=report -jar report-web/target/report.jar
+        args= new String[]{"--spring.config.location=classpath:conf/application-dev.properties"};
         SpringApplication.run(application, args);
     }
 

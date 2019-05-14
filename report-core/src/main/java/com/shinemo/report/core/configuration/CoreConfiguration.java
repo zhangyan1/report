@@ -22,62 +22,12 @@ import javax.annotation.Resource;
  */
 @Configuration
 @ComponentScan(basePackages = {
-        "com.shinemo.report.core.user.service",
-        "com.shinemo.report.core.user.facade",
+        "com.shinemo.report.core"
 })
 public class CoreConfiguration {
 
     @Resource
     private ShineMoProperties shineMoProperties;
-
-    /**
-     * 实例化 provider 配置
-     *
-     * @return com.shinemo.jce.common.config.ProviderConfig
-     * @author zhangyan
-     * @date 2019-05-10
-     **/
-    @Bean(initMethod="init")
-    public ProviderConfig providerConfig() {
-        ShineMoProperties.Provider provider = shineMoProperties.getJce().getProvider();
-        ProviderConfig config = new ProviderConfig();
-        config.setPort(provider.getPort());
-        config.setProxy(provider.getProxy());
-        return config;
-    }
-
-    /**
-     * 实例化 consumer 配置
-     *
-     * @return com.shinemo.jce.common.config.ConsumerConfig
-     * @author zhangyan
-     * @date 2019-05-10
-     **/
-    @Bean(initMethod="init")
-    public ConsumerConfig consumerConfig() {
-        ShineMoProperties.Consumer consumer = shineMoProperties.getJce().getConsumer();
-        ConsumerConfig config = new ConsumerConfig();
-        config.setUrl(consumer.getUrl());
-        config.setUrlMap(consumer.getUrlMap());
-        return config;
-    }
-
-    /**
-     * 实例化 center 配置
-     *
-     * @param name
-     * @return com.shinemo.jce.common.config.CenterConfig
-     * @author zhangyan
-     * @date 2019-05-10
-     **/
-    @Bean(initMethod="init")
-    public CenterConfig centerConfig(@Value("${spring.application.name}") String name) {
-        ShineMoProperties.Center center = shineMoProperties.getJce().getCenter();
-        CenterConfig config = new CenterConfig();
-        config.setIpAndPort(center.getHost());
-        config.setAppName(name);
-        return config;
-    }
 
     /**
      * EnvUtil
