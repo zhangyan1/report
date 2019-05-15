@@ -1,18 +1,12 @@
-package com.shinemo.report.test.core.user.facade;
+package com.shinemo.report.test.core.consumer;
 
 import com.google.gson.JsonObject;
 import com.shinemo.client.util.GsonUtil;
+import com.shinemo.report.test.core.application.ApplicationTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mybatis.spring.annotation.MapperScan;
-import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import javax.annotation.Resource;
 
 /**
  *
