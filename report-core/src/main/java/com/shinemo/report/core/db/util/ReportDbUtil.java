@@ -4,7 +4,10 @@ import com.shinemo.myconf.client.jdbc.druid.DruidDataSource;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,7 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ReportDbUtil {
 
     private static final Map<String, DruidDataSource> dataSourceMap = new ConcurrentHashMap<>(100);
-
     /**
      * 根据名称获取数据源
      * @param dbName
@@ -31,5 +33,9 @@ public class ReportDbUtil {
             }
         }
         return dataSource;
+    }
+
+
+    public static void releaseJdbcResource(Connection conn, Statement stmt, ResultSet rs) {
     }
 }
