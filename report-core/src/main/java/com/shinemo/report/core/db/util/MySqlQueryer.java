@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author tomdeng
+ * @author zhangyan
  */
 public class MySqlQueryer extends AbstractQueryer{
 
