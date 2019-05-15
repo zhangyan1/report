@@ -1,6 +1,5 @@
 package com.shinemo.report.test.core.user.service;
 
-import com.shinemo.report.core.user.service.UserInfoService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mybatis.spring.annotation.MapperScan;
