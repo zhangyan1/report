@@ -1,8 +1,10 @@
 package com.shinemo.report.core.db.util;
 
 import com.shinemo.client.exception.BizException;
+import com.shinemo.client.spring.SpringContextHolder;
 import com.shinemo.myconf.client.jdbc.druid.DruidDataSource;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -22,18 +24,12 @@ public class ReportDbUtil {
      * @return
      */
     public static DataSource getDataSource(String dbName){
-        DruidDataSource dataSource = dataSourceMap.get(dbName);
-        if(dataSource == null){
-            dataSource = new DruidDataSource();
-            dataSource.setDbName(dbName);
-            try {
-                dataSource.init();
-                dataSourceMap.put(dbName,dataSource);
-            } catch (SQLException e) {
-                log.error("[dataSource] init error dbName:"+dbName,e);
-            }
-        }
-        return dataSource;
+        DruidDataSource druidDataSource = SpringContextHolder.getBeanAndGenerateIfNotExist(dbName+"druidDataSource",DruidDataSource.class,
+                val->{
+                    val.addPropertyValue("dbName", dbName);
+                    val.setInitMethodName("init");
+                });
+        return druidDataSource;
     }
 
 

@@ -1,5 +1,6 @@
 package com.shinemo.report.core.configuration;
 
+import com.shinemo.client.spring.SpringContextHolder;
 import com.shinemo.report.dal.configuration.ShineMoProperties;
 import com.shinemo.client.mail.SendMailService;
 import com.shinemo.client.mail.SendMailServiceWrapper;
@@ -61,5 +62,11 @@ public class CoreConfiguration {
         sendMailServiceWrapper.setApplicationName(applicationName);
         sendMailServiceWrapper.setEmails(shineMoProperties.getNotificationEmail());
         return sendMailServiceWrapper;
+    }
+
+    @Bean
+    public SpringContextHolder springContextHolder(){
+        SpringContextHolder holder = new SpringContextHolder();
+        return holder;
     }
 }
