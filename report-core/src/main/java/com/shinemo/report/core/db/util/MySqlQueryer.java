@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 /**
  * @author zhangyan
  */
-public class MySqlQueryer extends AbstractQueryer{
+public class MySqlQueryer extends AbstractQueryer implements SqlQueryService{
 
     public MySqlQueryer(DataSource dataSource, ReportParameter parameter) {
         super(dataSource, parameter);
