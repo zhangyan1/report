@@ -9,15 +9,12 @@ import com.shinemo.report.client.meta.domain.MetaHeader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ReportExcelUtil{
 
     public static void writeExcel(List<MetaHeader>headers,List<Map<String,Object>> rows) throws Exception {
-        OutputStream out = new FileOutputStream("d://tmp/2007.xlsx");
+        OutputStream out = new FileOutputStream("d://tmp/tmp.xlsx");
         ExcelWriter writer = EasyExcelFactory.getWriterWithTempAndHandler(null,out, ExcelTypeEnum.XLSX,true,
                 new WriteHandlerImpl());
         Sheet sheet1 = new Sheet(1, 3);
@@ -53,5 +50,31 @@ public class ReportExcelUtil{
         return result;
     }
 
-
+    public static void main(String args[]){
+        List<MetaHeader>headers = new ArrayList<>();
+        MetaHeader a = new MetaHeader();
+        a.setIndex(0);
+        a.setKey("a");
+        a.setValue("第一列");
+        MetaHeader b = new MetaHeader();
+        b.setIndex(1);
+        b.setKey("b");
+        b.setValue("第二列");
+        headers.add(a);
+        headers.add(b);
+        List<Map<String,Object>> lists = new ArrayList<>();
+        Map<String,Object> mapA = new HashMap<>();
+        mapA.put("a","张三");
+        mapA.put("b","吃饭");
+        Map<String,Object> mapB = new HashMap<>();
+        mapB.put("a","李四");
+        mapB.put("b","睡觉");
+        lists.add(mapA);
+        lists.add(mapB);
+        try {
+            writeExcel(headers,lists);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
