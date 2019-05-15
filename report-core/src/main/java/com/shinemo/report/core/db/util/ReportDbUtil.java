@@ -1,5 +1,6 @@
 package com.shinemo.report.core.db.util;
 
+import com.shinemo.client.exception.BizException;
 import com.shinemo.myconf.client.jdbc.druid.DruidDataSource;
 import lombok.extern.slf4j.Slf4j;
 
@@ -37,5 +38,20 @@ public class ReportDbUtil {
 
 
     public static void releaseJdbcResource(Connection conn, Statement stmt, ResultSet rs) {
+        try {
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            log.error("[releaseJdbcResource] error", ex);
+            throw new BizException();
+        }
+
     }
 }
