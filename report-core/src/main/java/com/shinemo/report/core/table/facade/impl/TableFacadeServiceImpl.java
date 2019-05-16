@@ -1,20 +1,34 @@
 package com.shinemo.report.core.table.facade.impl;
 
+import com.google.common.collect.Lists;
+import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
+import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
+import com.shinemo.report.client.base.conf.domain.MetaParamConf;
+import com.shinemo.report.client.base.conf.domain.MetaReportTemplate;
+import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
+import com.shinemo.report.client.base.conf.query.MetaParamConfQuery;
+import com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
+import com.shinemo.report.client.db.domain.ReportParameter;
 import com.shinemo.report.client.table.domain.TableInfoDO;
 import com.shinemo.report.client.table.domain.TableQueryParamDO;
 import com.shinemo.report.client.table.facade.TableFacadeService;
 import com.shinemo.report.core.db.util.ReportDbUtil;
 import com.shinemo.report.core.db.util.SqlQueryService;
 import com.shinemo.report.core.db.util.SqlQueryerFactory;
+import com.shinemo.report.dal.base.conf.wrapper.MetaColumnConfWrapper;
+import com.shinemo.report.dal.base.conf.wrapper.MetaParamConfWrapper;
 import com.shinemo.report.dal.base.conf.wrapper.MetaReportTemplateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -22,7 +36,14 @@ import java.util.List;
 @Slf4j
 public class TableFacadeServiceImpl implements TableFacadeService {
 
+    @Resource
     private MetaReportTemplateWrapper mataReportTemplateWrapper;
+
+    @Resource
+    private MetaParamConfWrapper metaParamConfWrapper;
+
+    @Resource
+    private MetaColumnConfWrapper metaColumnConfWrapper;
 
     @Override
     public Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(String dbName, String sqlText) {
@@ -43,7 +64,47 @@ public class TableFacadeServiceImpl implements TableFacadeService {
     }
 
     @Override
-    public Result<TableInfoDO> getTableInfo(Long temlateId, List<TableQueryParamDO> params) {
+    public Result<TableInfoDO> getTableInfo(Long templateId, List<TableQueryParamDO> params) {
+        //查找模板相关信息
+        MetaReportTemplateQuery query = new MetaReportTemplateQuery();
+        query.setId(templateId);
+        Result<MetaReportTemplate> rs = mataReportTemplateWrapper.get(query);
+        if(!rs.hasValue()){
+            log.error("");
+            return Result.error(rs.getError());
+        }
+        //查找列配置
+        MetaColumnConfQuery columnQuery = new MetaColumnConfQuery();
+        columnQuery.setReportId(templateId);
+        Result<ListVO<MetaColumnConf>> columnRs = metaColumnConfWrapper.find(columnQuery);
+        if(!columnRs.hasValue()){
+            return Result.error(columnRs.getError());
+        }
+
+        MetaParamConfQuery paramQuery = new MetaParamConfQuery();
+        paramQuery.setReportId(templateId);
+        Result<ListVO<MetaParamConf>> paramRs = metaParamConfWrapper.find(paramQuery);
+        if(paramRs.hasValue()){
+            //TODO 进行sql重封装
+        }
+        DataSource dataSource = ReportDbUtil.getDataSource("buycenter");
+        if(dataSource == null){
+            //TODO 返回
+        }
+
+        List<ReportMetaDataColumn> columnLists = Lists.newArrayList();
+        columnRs.getValue().getRows().sort(Comparator.comparingInt(val->val.getWeight()));
+        Collections.reverse(columnRs.getValue().getRows());
+        for(int i=0;i<columnRs.getValue().getRows().size()-i;i++){
+
+        }
+
+        ReportParameter param = new ReportParameter();
+        param.setSqlText(rs.getValue().getSqlText());
+        SqlQueryService sqlQueryService = SqlQueryerFactory.create(dataSource,param);
+
+
+
         return null;
     }
 }

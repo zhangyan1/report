@@ -17,6 +17,6 @@ public interface TableFacadeService {
      */
     Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(String dbName, String sql);
 
-    Result<TableInfoDO> getTableInfo(Long temlateId, List<TableQueryParamDO> params);
+    Result<TableInfoDO> getTableInfo(Long templateId, List<TableQueryParamDO> params);
 
 }
