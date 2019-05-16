@@ -5,6 +5,7 @@ import com.shinemo.client.exception.BizException;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.db.domain.ReportParameter;
 import com.shinemo.report.client.db.domain.ReportQueryParamItem;
+import com.shinemo.report.client.meta.domain.MetaHeader;
 import lombok.extern.slf4j.Slf4j;
 import javax.sql.DataSource;
 import java.sql.*;
@@ -19,14 +20,14 @@ public abstract class AbstractQueryer {
 
     protected final DataSource dataSource;
     protected final ReportParameter parameter;
-    protected final List<ReportMetaDataColumn> metaDataColumns;
+    protected final List<MetaHeader> metaHeaders;
 
     protected AbstractQueryer(final DataSource dataSource, final ReportParameter parameter) {
         this.dataSource = dataSource;
         this.parameter = parameter;
-        this.metaDataColumns = this.parameter == null ?
+        this.metaHeaders = this.parameter == null ?
             new ArrayList<>(0) :
-            new ArrayList<>(this.parameter.getMetaColumns());
+            new ArrayList<>(this.parameter.getMetaHeaders());
     }
 
     /**
@@ -97,8 +98,8 @@ public abstract class AbstractQueryer {
         return rows;
     }
 
-    public List<ReportMetaDataColumn> getMetaDataColumns() {
-        return this.metaDataColumns;
+    public List<MetaHeader> getMetaHeaders() {
+        return this.metaHeaders;
     }
 
     /**
@@ -114,7 +115,7 @@ public abstract class AbstractQueryer {
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText()));
-            return this.getMetaDataRows(rs, this.parameter.getMetaColumns());
+            return this.getMetaDataRows(rs, this.parameter.getMetaHeaders());
         } catch (final Exception ex) {
             log.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
             throw new BizException();
@@ -126,21 +127,22 @@ public abstract class AbstractQueryer {
     /**
      * 获取查询结果集 (后续可以把map接转为object)
      * @param rs
-     * @param sqlColumns
+     * @param metaHeaders
      * @return
      * @throws SQLException
      */
-    protected List<Map<String,Object>> getMetaDataRows(final ResultSet rs, final List<ReportMetaDataColumn> sqlColumns)
+    protected List<Map<String,Object>> getMetaDataRows(final ResultSet rs, final List<MetaHeader> metaHeaders)
         throws SQLException {
         final List<Map<String,Object>> rows = new ArrayList<>();
         while (rs.next()) {
             final Map<String,Object> row = new HashMap<>();
-            for (final ReportMetaDataColumn column : sqlColumns) {
-                Object value = rs.getObject(column.getKey());
-                if (column.getDataType().contains("BINARY")) {
+            for (final MetaHeader metaHeader : metaHeaders) {
+                Object value = rs.getObject(metaHeader.getMainKey());
+                if (metaHeader.getDataType().contains("BINARY")) {
                     value = new String((byte[])value);
                 }
-                row.put(column.getKey(),value);
+                //JSON 字段类型  以及计算型 以及拼凑型
+                row.put(metaHeader.getKey(),value);
             }
             rows.add(row);
         }

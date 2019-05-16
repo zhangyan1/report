@@ -8,6 +8,11 @@ import java.util.Map;
 
 public interface SqlQueryService {
 
+    /**
+     * 获取列集合 设置列信息时用到
+     * @param sqlText
+     * @return
+     */
     List<ReportMetaDataColumn> parseMetaDataColumns(String sqlText);
 
     /**
@@ -30,5 +35,5 @@ public interface SqlQueryService {
      *
      * @return List[ReportMetaDataColumn]
      */
-    List<ReportMetaDataColumn> getMetaDataColumns();
+    List<ReportMetaDataColumn> getMetaHeaders();
 }
