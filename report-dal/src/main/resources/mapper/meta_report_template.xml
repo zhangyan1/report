@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.shinemo.report.dal.base.conf.mapper.MataReportTemplateMapper">
+<mapper namespace="com.shinemo.report.dal.base.conf.mapper.MetaReportTemplateMapper">
 
 	<!-- 结果集对应关系 -->
-	<resultMap id="result" type="com.shinemo.report.client.base.conf.domain.MataReportTemplate" >
+	<resultMap id="result" type="com.shinemo.report.client.base.conf.domain.MetaReportTemplate" >
 		<id column="id" property="id"/>
 		<result property="gmtCreate" column="gmt_create"/>
 		<result property="gmtModified" column="gmt_modified"/>
@@ -51,7 +51,7 @@
 
 	<!-- 查询结果集 -->
     <select id="find" resultMap="result"
-            parameterType="com.shinemo.report.client.base.conf.query.MataReportTemplateQuery">
+            parameterType="com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery">
         select
         <include refid="columns"/>
         from
@@ -69,7 +69,7 @@
     </select>
 
 	<!-- 查询某条记录 -->
-    <select id="get" resultMap="result" parameterType="com.shinemo.report.client.base.conf.query.MataReportTemplateQuery">
+    <select id="get" resultMap="result" parameterType="com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery">
         select
         <include refid="columns"/>
         from
@@ -79,14 +79,14 @@
     </select>
 
 	<!-- 统计查询结果数量 -->
-    <select id="count" resultType="long" parameterType="com.shinemo.report.client.base.conf.query.MataReportTemplateQuery">
+    <select id="count" resultType="long" parameterType="com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery">
         select count(*) from
         <include refid="table"/>
         <include refid="conditions"/>
     </select>
 
 	<!-- 删除 -->
-    <delete id="delete" parameterType="com.shinemo.report.client.base.conf.query.MataReportTemplateQuery">
+    <delete id="delete" parameterType="com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery">
         delete from
         <include refid="table"/>
         where id = #{id}
@@ -94,7 +94,7 @@
 
 	<!-- 插入 -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="id"
-            parameterType="com.shinemo.report.client.base.conf.domain.MataReportTemplate">
+            parameterType="com.shinemo.report.client.base.conf.domain.MetaReportTemplate">
         insert into
         <include refid="table"/>
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -162,7 +162,7 @@
     </insert>
 
     <!-- 更新 -->
-    <update id="update" parameterType="com.shinemo.report.client.base.conf.domain.MataReportTemplate">
+    <update id="update" parameterType="com.shinemo.report.client.base.conf.domain.MetaReportTemplate">
         UPDATE mata_report_template
         <set>
             gmt_modified = now(),

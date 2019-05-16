@@ -15,7 +15,7 @@ import com.shinemo.client.common.QueryBase;
  */
 @Getter
 @Setter
-public class MataReportTemplateQuery extends QueryBase {
+public class MetaReportTemplateQuery extends QueryBase {
 	private Long id;
 	private Date gmtCreate;
 	private Date gmtModified;

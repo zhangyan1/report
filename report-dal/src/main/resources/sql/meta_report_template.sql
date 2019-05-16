@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `mata_report_template`;
-CREATE TABLE `mata_report_template` (
+DROP TABLE IF EXISTS `meta_report_template`;
+CREATE TABLE `meta_report_template` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `gmt_create`   datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,

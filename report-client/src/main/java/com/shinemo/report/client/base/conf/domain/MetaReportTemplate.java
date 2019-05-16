@@ -16,7 +16,7 @@ import com.shinemo.client.common.BaseDO;
  */
 @Getter
 @Setter
-public class MataReportTemplate extends BaseDO {
+public class MetaReportTemplate extends BaseDO {
 	private Long id;
 	private Date gmtCreate;
 	private Date gmtModified;
