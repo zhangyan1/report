@@ -11,6 +11,8 @@ import com.shinemo.report.client.base.conf.query.MetaParamConfQuery;
 import com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.db.domain.ReportParameter;
+import com.shinemo.report.client.meta.domain.MetaHeader;
+import com.shinemo.report.client.table.domain.SheetInfoDO;
 import com.shinemo.report.client.table.domain.TableInfoDO;
 import com.shinemo.report.client.table.domain.TableQueryParamDO;
 import com.shinemo.report.client.table.facade.TableFacadeService;
@@ -30,6 +32,7 @@ import javax.sql.DataSource;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -80,7 +83,6 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         if(!columnRs.hasValue()){
             return Result.error(columnRs.getError());
         }
-
         MetaParamConfQuery paramQuery = new MetaParamConfQuery();
         paramQuery.setReportId(templateId);
         Result<ListVO<MetaParamConf>> paramRs = metaParamConfWrapper.find(paramQuery);
@@ -91,19 +93,31 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         if(dataSource == null){
             //TODO 返回
         }
-
-        List<ReportMetaDataColumn> columnLists = Lists.newArrayList();
+        List<MetaHeader> columnLists = Lists.newArrayList();
         columnRs.getValue().getRows().sort(Comparator.comparingInt(val->val.getWeight()));
         Collections.reverse(columnRs.getValue().getRows());
         for(int i=0;i<columnRs.getValue().getRows().size()-i;i++){
-
+            MetaColumnConf conf = columnRs.getValue().getRows().get(i);
+            MetaHeader iter = new MetaHeader();
+            iter.setIndex(i);
+            iter.setKey(conf.getColumnName());
+            iter.setMainKey(conf.getMainColumnName());
+            iter.setValue(conf.getColumnShowName());
+            iter.setOriginDataType(conf.getOriginDataType());
+            iter.setDataType(conf.getDataType());
+            columnLists.add(iter);
         }
         ReportParameter param = new ReportParameter();
         param.setSqlText(rs.getValue().getSqlText());
+        param.setMetaHeaders(columnLists);
         SqlQueryService sqlQueryService = SqlQueryerFactory.create(dataSource,param);
-
-
-
-        return null;
+        List<Map<String,Object>> rowsList = sqlQueryService.getMetaDataRows();
+        SheetInfoDO sheetInfoDO = new SheetInfoDO();
+        sheetInfoDO.setHeaders(columnLists);
+        sheetInfoDO.setRows(rowsList);
+        TableInfoDO tableInfoDO = new TableInfoDO();
+        tableInfoDO.setFileName(rs.getValue().getName());
+        tableInfoDO.setSheetInfos(Lists.newArrayList(sheetInfoDO));
+        return Result.success(tableInfoDO);
     }
 }

@@ -37,7 +37,7 @@ public class MetaColumnConf extends BaseDO {
 	*/
 	private String columnShowName;
 	/**
-	* 1-布局列 2-统计列 3-维度列
+	* 1-布局列 2-统计列 3-维度列(暂时不用)
 	*/
 	private Integer columnType;
 	/**
@@ -52,6 +52,10 @@ public class MetaColumnConf extends BaseDO {
 	* 数据类型 0-文本 1-数字 2-json对象
 	*/
 	private Integer dataType;
+	/**
+	 * 数据库原始数据类型
+	 */
+	private String originDataType;
 	/**
 	* 扩展字段
 	*/

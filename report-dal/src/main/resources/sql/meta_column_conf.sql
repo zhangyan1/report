@@ -12,6 +12,8 @@ CREATE TABLE `meta_column_conf` (
   `sort_type` int(1) not null DEFAULT 0 comment '排序类型 1-升序 2-降序',
   `data_type` int(1) not null DEFAULT 0 comment '数据类型 0-文本 1-数字 2-json对象',
   `extend` text DEFAULT null comment '扩展字段',
+  `name` text DEFAULT null comment '模板名称',
+  `orgin_data_type` varchar(16) not null comment '原始数据库字段类型',
   PRIMARY KEY (`id`),
   key `uk_report_column` (`report_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='报表模板字段映射配置表';

@@ -20,11 +20,11 @@ public class MetaHeader  extends BaseDO{
     /**
      * 数据库字段类型
      */
-    private String dataType;
+    private String originDataType;
     /**
      * 字段type
      */
-    private Integer type;
+    private Integer dataType;
     /**
      * 关联key
      */

@@ -49,6 +49,10 @@ public class MetaReportTemplate extends BaseDO {
 	*/
 	private Long sourceId;
 	/**
+	 * 模板名称
+	 */
+	private String name;
+	/**
 	* 扩展标位 1-需要审核
 	*/
 	private Long flag;
