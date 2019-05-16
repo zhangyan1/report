@@ -98,7 +98,6 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         for(int i=0;i<columnRs.getValue().getRows().size()-i;i++){
 
         }
-
         ReportParameter param = new ReportParameter();
         param.setSqlText(rs.getValue().getSqlText());
         SqlQueryService sqlQueryService = SqlQueryerFactory.create(dataSource,param);

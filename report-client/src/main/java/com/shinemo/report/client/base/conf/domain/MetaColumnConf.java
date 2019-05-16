@@ -53,7 +53,7 @@ public class MetaColumnConf extends BaseDO {
 	*/
 	private Integer dataType;
 	/**
-	* json对象里面相关字段
+	* 扩展字段
 	*/
-	private String jsonColumn;
+	private String extend;
 }
