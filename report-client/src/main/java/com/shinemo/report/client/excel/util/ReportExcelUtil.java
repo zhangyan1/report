@@ -22,7 +22,7 @@ import java.util.*;
 public class ReportExcelUtil{
 
 
-    public static void wireteExcel(TableInfoDO tableInfoDO,HttpServletResponse response){
+    public static void writeExcel(TableInfoDO tableInfoDO,HttpServletResponse response){
         try {
             ServletOutputStream servletOutputStream = response.getOutputStream();
             ExcelWriter writer = EasyExcelFactory.getWriterWithTempAndHandler(null,servletOutputStream, ExcelTypeEnum.XLSX,true,
