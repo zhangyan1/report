@@ -4,14 +4,48 @@ import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
+import com.shinemo.client.util.GsonUtil;
 import com.shinemo.report.client.meta.domain.MetaHeader;
+import com.shinemo.report.client.table.domain.SheetInfoDO;
+import com.shinemo.report.client.table.domain.TableInfoDO;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 
-import java.io.FileNotFoundException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.*;
 
+@Slf4j
 public class ReportExcelUtil{
+
+
+    public static void wireteExcel(TableInfoDO tableInfoDO,HttpServletResponse response){
+        try {
+            ServletOutputStream servletOutputStream = response.getOutputStream();
+            ExcelWriter writer = EasyExcelFactory.getWriterWithTempAndHandler(null,servletOutputStream, ExcelTypeEnum.XLSX,true,
+                    new WriteHandlerImpl());
+            for(int i=0;i<tableInfoDO.getSheetInfos().size();i++){
+                SheetInfoDO sheetInfoDO = tableInfoDO.getSheetInfos().get(i);
+                int sheetNo = i+1;
+                Sheet sheet = new Sheet(sheetNo);
+                sheet.setSheetName(StringUtils.isBlank(sheetInfoDO.getSheetName())?"sheet"+sheetNo:sheetInfoDO.getSheetName());
+                sheet.setHead(createListStringHead(sheetInfoDO.getHeaders()));//设置表头
+                sheet.setAutoWidth(Boolean.TRUE);//设置自适应宽度
+                writer.write1(createListObject(sheetInfoDO.getRows(),sheetInfoDO.getHeaders()), sheet);
+            }
+            writer.finish();
+            response.setContentType("multipart/form-data");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment;filename="+tableInfoDO.getFileName()+".xlsx");
+            servletOutputStream.flush();
+        } catch (IOException e) {
+            log.error("[wireteExcel] error param:"+ GsonUtil.toJson(tableInfoDO),e);
+        }
+
+    }
 
     public static void writeExcel(List<MetaHeader>headers,List<Map<String,Object>> rows) throws Exception {
         OutputStream out = new FileOutputStream("d://tmp/tmp.xlsx");

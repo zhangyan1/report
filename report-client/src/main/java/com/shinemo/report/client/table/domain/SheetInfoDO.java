@@ -12,6 +12,8 @@ import java.util.Map;
 @Setter
 public class SheetInfoDO extends BaseDO{
 
+
+    private String sheetName;
     private List<MetaHeader> headers;
     private List<Map<String,Object>> rows;
 
