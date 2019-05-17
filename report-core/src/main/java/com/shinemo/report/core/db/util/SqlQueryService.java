@@ -2,6 +2,7 @@ package com.shinemo.report.core.db.util;
 
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.db.domain.ReportQueryParamItem;
+import com.shinemo.report.client.meta.domain.MetaHeader;
 
 import java.util.List;
 import java.util.Map;
@@ -35,5 +36,5 @@ public interface SqlQueryService {
      *
      * @return List[ReportMetaDataColumn]
      */
-    List<ReportMetaDataColumn> getMetaHeaders();
+    List<MetaHeader> getMetaHeaders();
 }

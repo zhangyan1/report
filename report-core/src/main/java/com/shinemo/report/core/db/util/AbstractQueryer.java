@@ -138,7 +138,7 @@ public abstract class AbstractQueryer {
             final Map<String,Object> row = new HashMap<>();
             for (final MetaHeader metaHeader : metaHeaders) {
                 Object value = rs.getObject(metaHeader.getMainKey());
-                if (metaHeader.getDataType().contains("BINARY")) {
+                if (metaHeader.getOriginDataType().contains("BINARY")) {
                     value = new String((byte[])value);
                 }
                 //JSON 字段类型  以及计算型 以及拼凑型
