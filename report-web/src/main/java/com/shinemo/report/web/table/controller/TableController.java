@@ -52,6 +52,7 @@ public class TableController {
                 log.error("[downloadExcel] Io error",e);
             }
         }
+        tableInfoDOResult.getValue().setFileName("test");
         ReportExcelUtil.writeExcel(tableInfoDOResult.getValue(),response);
     }
 

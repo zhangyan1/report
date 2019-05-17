@@ -25,6 +25,9 @@ public class ReportExcelUtil{
 
     public static void writeExcel(TableInfoDO tableInfoDO,HttpServletResponse response){
         try {
+            response.setContentType("multipart/form-data");
+            response.setCharacterEncoding("utf-8");
+            response.setHeader("Content-disposition", "attachment;filename="+tableInfoDO.getFileName()+".xlsx");
             ServletOutputStream servletOutputStream = response.getOutputStream();
             ExcelWriter writer = EasyExcelFactory.getWriterWithTempAndHandler(null,servletOutputStream, ExcelTypeEnum.XLSX,true,
                     new WriteHandlerImpl());
@@ -38,9 +41,6 @@ public class ReportExcelUtil{
                 writer.write1(createListObject(sheetInfoDO.getRows(),sheetInfoDO.getHeaders()), sheet);
             }
             writer.finish();
-            response.setContentType("application/xls;charset=utf-8");
-            response.setCharacterEncoding("utf-8");
-            response.setHeader("Content-disposition", "attachment;filename="+tableInfoDO.getFileName()+".xlsx");
             servletOutputStream.flush();
         } catch (IOException e) {
             log.error("[wireteExcel] error param:"+ GsonUtil.toJson(tableInfoDO),e);
