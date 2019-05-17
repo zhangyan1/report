@@ -12,7 +12,7 @@ import com.shinemo.client.common.BaseDO;
  * 实体类
  * @ClassName: MetaColumnConf
  * @author zhangyan
- * @Date 2019-05-14 10:13:19
+ * @Date 2019-05-17 11:07:31
  */
 @Getter
 @Setter
@@ -37,7 +37,7 @@ public class MetaColumnConf extends BaseDO {
 	*/
 	private String columnShowName;
 	/**
-	* 1-布局列 2-统计列 3-维度列(暂时不用)
+	* 1-布局列 2-统计列 3-维度列
 	*/
 	private Integer columnType;
 	/**
@@ -53,11 +53,7 @@ public class MetaColumnConf extends BaseDO {
 	*/
 	private Integer dataType;
 	/**
-	 * 数据库原始数据类型
-	 */
-	private String originDataType;
-	/**
-	* 扩展字段
+	* json对象里面相关字段
 	*/
-	private String extend;
+	private String jsonColumn;
 }
