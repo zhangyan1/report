@@ -10,6 +10,7 @@ import com.shinemo.report.client.table.domain.SheetInfoDO;
 import com.shinemo.report.client.table.domain.TableInfoDO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.springframework.util.Assert;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ public class ReportExcelUtil{
 
 
     public static void writeExcel(TableInfoDO tableInfoDO,HttpServletResponse response){
+        Assert.hasText(tableInfoDO.getFileName(),"fileName is null");
         try {
             response.setContentType("multipart/form-data");
             response.setCharacterEncoding("utf-8");
