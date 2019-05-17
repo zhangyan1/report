@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Slf4j
@@ -37,7 +38,7 @@ public class ReportExcelUtil{
                 writer.write1(createListObject(sheetInfoDO.getRows(),sheetInfoDO.getHeaders()), sheet);
             }
             writer.finish();
-            response.setContentType("multipart/form-data");
+            response.setContentType("application/xls;charset=utf-8");
             response.setCharacterEncoding("utf-8");
             response.setHeader("Content-disposition", "attachment;filename="+tableInfoDO.getFileName()+".xlsx");
             servletOutputStream.flush();

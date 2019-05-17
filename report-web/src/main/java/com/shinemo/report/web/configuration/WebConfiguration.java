@@ -20,6 +20,7 @@ import javax.servlet.Filter;
 @Configuration
 @ComponentScan(basePackages = {
         "com.shinemo.report.web.controller",
+        "com.shinemo.report.web.table.controller"
 })
 public class WebConfiguration extends WebMvcConfigurerAdapter {
 
