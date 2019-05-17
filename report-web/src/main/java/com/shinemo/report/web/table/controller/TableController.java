@@ -24,6 +24,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
+
+/**
+ * 1:jdbcType 等枚举定义
+ 2:sql 封装等
+ 3:占位符替换
+ 4:接口提供
+ 5:计算列
+ 6:json的情况
+ */
 @Controller
 @RequestMapping("/report")
 @Slf4j
