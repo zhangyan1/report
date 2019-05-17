@@ -103,7 +103,7 @@ public class TableFacadeServiceImpl implements TableFacadeService {
             iter.setKey(conf.getColumnName());
             iter.setMainKey(conf.getMainColumnName());
             iter.setValue(conf.getColumnShowName());
-            iter.setOriginDataType(conf.getOriginDataType());
+            iter.setOriginDataType(conf.getOrginDataType());
             iter.setDataType(conf.getDataType());
             columnLists.add(iter);
         }
