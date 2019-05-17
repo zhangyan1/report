@@ -3,6 +3,7 @@ package com.shinemo.report.web.table.controller;
 
 import com.google.gson.reflect.TypeToken;
 import com.shinemo.client.common.Result;
+import com.shinemo.client.common.WebResult;
 import com.shinemo.client.util.GsonUtil;
 import com.shinemo.report.client.excel.util.ReportExcelUtil;
 import com.shinemo.report.client.table.domain.TableInfoDO;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
@@ -52,5 +54,22 @@ public class TableController {
         }
         ReportExcelUtil.writeExcel(tableInfoDOResult.getValue(),response);
     }
+
+    @RequestMapping(value = "/previewExcel", method = RequestMethod.GET)
+    @ResponseBody
+    public WebResult<TableInfoDO> previewExcel(Long templateId, String paramInfo){
+        Assert.notNull(templateId,"templateId is null");
+        List<TableQueryParamDO> params = null;
+        if(!StringUtils.isBlank(paramInfo)){
+            params = GsonUtil.fromGson2Obj(paramInfo,new TypeToken<List<TableQueryParamDO>>(){}.getType());
+        }
+        Result<TableInfoDO> tableInfoDOResult = tableFacadeService.getTableInfo(templateId,params);
+        if(!tableInfoDOResult.hasValue()){
+            return WebResult.error(tableInfoDOResult.getError());
+        }
+        return WebResult.success(tableInfoDOResult.getValue());
+    }
+
+
 
 }
