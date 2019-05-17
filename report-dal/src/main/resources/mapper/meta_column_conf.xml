@@ -17,14 +17,14 @@
 		<result property="sortType" column="sort_type"/>
 		<result property="dataType" column="data_type"/>
 		<result property="extend" column="extend"/>
-		<result property="name" column="name"/>
 		<result property="orginDataType" column="orgin_data_type"/>
 		<result property="expression" column="expression"/>
 	</resultMap>
 
 	<!-- 数据库字段 -->
 	<sql id="columns">
-		id, gmt_create, gmt_modified, report_id, main_column_name, column_name, column_show_name, column_type, weight, sort_type, data_type, extend, name, orgin_data_type, expression
+		id, gmt_create, gmt_modified, report_id, main_column_name, column_name, column_show_name,
+		 column_type, weight, sort_type, data_type, extend, orgin_data_type, expression
 	</sql>
 
     <sql id="table">
@@ -45,7 +45,6 @@
 					<if test="weight != null">and weight = #{weight}</if>
 					<if test="sortType != null">and sort_type = #{sortType}</if>
 					<if test="dataType != null">and data_type = #{dataType}</if>
-					<if test="name != null">and name = #{name}</if>
                 </otherwise>
             </choose>
         </where>
@@ -133,9 +132,6 @@
                     <if test="extend != null">
 						extend,
 					</if>
-                    <if test="name != null">
-						name,
-					</if>
                     <if test="orginDataType != null">
 						orgin_data_type,
 					</if>
@@ -175,9 +171,6 @@
                     </if>
                     <if test="extend != null">
 						#{extend, jdbcType=LONGVARCHAR},
-                    </if>
-                    <if test="name != null">
-						#{name, jdbcType=LONGVARCHAR},
                     </if>
                     <if test="orginDataType != null">
 						#{orginDataType, jdbcType=VARCHAR},
@@ -219,9 +212,6 @@
             </if>
             <if test="extend != null">
                 extend = #{extend, jdbcType=LONGVARCHAR},
-            </if>
-            <if test="name != null">
-                name = #{name, jdbcType=LONGVARCHAR},
             </if>
             <if test="orginDataType != null">
                 orgin_data_type = #{orginDataType, jdbcType=VARCHAR},

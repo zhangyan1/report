@@ -96,7 +96,7 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         List<MetaHeader> columnLists = Lists.newArrayList();
         columnRs.getValue().getRows().sort(Comparator.comparingInt(val->val.getWeight()));
         Collections.reverse(columnRs.getValue().getRows());
-        for(int i=0;i<columnRs.getValue().getRows().size()-i;i++){
+        for(int i=0;i<columnRs.getValue().getRows().size();i++){
             MetaColumnConf conf = columnRs.getValue().getRows().get(i);
             MetaHeader iter = new MetaHeader();
             iter.setIndex(i);
