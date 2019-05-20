@@ -26,6 +26,6 @@ public class MySqlQueryer extends AbstractQueryer implements SqlQueryService{
             sqlText = matcher.replaceFirst("");
         }
         sqlText = sqlText.split("where")[0];
-        return sqlText + " limit 100";
+        return sqlText + " where biz_type='18' limit 100";
     }
 }

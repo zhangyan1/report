@@ -1,12 +1,16 @@
 package com.shinemo.report.test.core.consumer;
 
+import com.google.common.collect.Maps;
 import com.google.gson.JsonObject;
 import com.shinemo.client.util.GsonUtil;
 import com.shinemo.report.test.core.application.ApplicationTest;
+import org.apache.commons.lang.text.StrSubstitutor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Map;
 
 /**
  *
@@ -23,6 +27,17 @@ public class JsonTest {
         JsonObject obj = GsonUtil.fromGson2Obj(a,JsonObject.class);
         JsonObject objA = obj.getAsJsonObject("orderSnapshot");
         System.out.println(objA.get("freight"));
+    }
+
+    @Test
+    public void test(){
+        Map<String, String> replaceValue = Maps.newHashMap();
+        replaceValue.put("name", "john");
+        replaceValue.put("age", "27");
+        StrSubstitutor strSubstitutor = new StrSubstitutor(replaceValue);
+        String template1 = " of${age} is at the age ${name} ";
+        String param3 = strSubstitutor.replace(template1);
+        System.out.println("-------------------param3=" + param3);
     }
 
 }
