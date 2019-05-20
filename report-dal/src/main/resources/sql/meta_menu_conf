@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS `meta_db_conf`;
-CREATE TABLE `meta_db_conf` (
+DROP TABLE IF EXISTS `meta_menu_conf`;
+CREATE TABLE `meta_menu_conf` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `gmt_create`   datetime DEFAULT NULL,
   `gmt_modified` datetime DEFAULT NULL,
