@@ -35,9 +35,9 @@ public class JsonTest {
         replaceValue.put("name", "john");
         replaceValue.put("age", "27");
         StrSubstitutor strSubstitutor = new StrSubstitutor(replaceValue);
-        String template1 = " of${age} is at the age ${name} ";
+        String template1 = " of${age} is at the age ${name} ${test}";
         String param3 = strSubstitutor.replace(template1);
-        System.out.println("-------------------param3=" + param3);
+        System.out.println(param3);
     }
 
 }
