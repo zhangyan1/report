@@ -16,4 +16,4 @@ CREATE TABLE `meta_menu_conf` (
   `sub_channel_id`  bigint NOT NULL comment '子id 企管的为scopeId 礼品商的为礼品商id',
   `flag` bigint DEFAULT '0' comment '1-所有channel_id可见 2-所有子channel_id可见'
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='报表配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='菜单配置表';
