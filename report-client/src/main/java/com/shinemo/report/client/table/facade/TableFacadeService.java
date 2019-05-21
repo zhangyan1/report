@@ -11,12 +11,17 @@ public interface TableFacadeService {
 
     /**
      * 获取列信息
-     * @param dbName
+     * @param dbId
      * @param sql
      * @return
      */
-    Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(String dbName, String sql);
-
+    Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(Long dbId, String sql);
+    /**
+     * 获取表格信息
+     * @param templateId
+     * @param params
+     * @return
+     */
     Result<TableInfoDO> getTableInfo(Long templateId, List<TableQueryParamDO> params);
 
 }

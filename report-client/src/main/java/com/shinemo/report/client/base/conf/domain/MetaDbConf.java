@@ -17,6 +17,7 @@ import com.shinemo.client.common.BaseDO;
 @Getter
 @Setter
 public class MetaDbConf extends BaseDO {
+
 	private Long id;
 	private Date gmtCreate;
 	private Date gmtModified;
@@ -28,33 +29,19 @@ public class MetaDbConf extends BaseDO {
 	* 创建者姓名
 	*/
 	private String createUserName;
-	private Integer appType;
 	/**
 	* 删除状态 1-正常 0-删除
 	*/
 	private Integer status;
 	/**
-	* 账号
-	*/
-	private String user;
-	/**
-	* 密码
-	*/
-	private String passwd;
-	/**
-	* 数据库名称
+	* 数据库名称展示用
 	*/
 	private String dbName;
 	/**
-	* 数据库url
-	*/
-	private String jdbcUrl;
-	/**
-	* 数据库驱动
-	*/
-	private String jdbcDriver;
-	/**
-	* 1-mysql
-	*/
-	private Integer type;
+	 * 数据库值 myconf获取数据源时用
+	 */
+	private String dbValue;
+
+
+
 }

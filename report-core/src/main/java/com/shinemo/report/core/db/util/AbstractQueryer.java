@@ -55,7 +55,7 @@ public abstract class AbstractQueryer {
                 column.setWidth(rsMataData.getColumnDisplaySize(i));
                 columns.add(column);
             }
-        } catch (final SQLException ex) {
+        } catch (SQLException ex) {
             throw new RuntimeException(ex);
         } finally {
             ReportDbUtil.releaseJdbcResource(conn, stmt, rs);

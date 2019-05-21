@@ -4,11 +4,14 @@ import com.google.common.collect.Lists;
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
+import com.shinemo.report.client.base.conf.domain.MetaDbConf;
 import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.base.conf.domain.MetaReportTemplate;
 import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
+import com.shinemo.report.client.base.conf.query.MetaDbConfQuery;
 import com.shinemo.report.client.base.conf.query.MetaParamConfQuery;
 import com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery;
+import com.shinemo.report.client.common.domain.ReportErrors;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.db.domain.ReportParameter;
 import com.shinemo.report.client.meta.domain.MetaHeader;
@@ -20,12 +23,14 @@ import com.shinemo.report.core.db.util.ReportDbUtil;
 import com.shinemo.report.core.db.util.SqlQueryService;
 import com.shinemo.report.core.db.util.SqlQueryerFactory;
 import com.shinemo.report.dal.base.conf.wrapper.MetaColumnConfWrapper;
+import com.shinemo.report.dal.base.conf.wrapper.MetaDbConfWrapper;
 import com.shinemo.report.dal.base.conf.wrapper.MetaParamConfWrapper;
 import com.shinemo.report.dal.base.conf.wrapper.MetaReportTemplateWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -46,17 +51,25 @@ public class TableFacadeServiceImpl implements TableFacadeService {
     private MetaParamConfWrapper metaParamConfWrapper;
 
     @Resource
+    private MetaDbConfWrapper metaDbConfWrapper;
+
+    @Resource
     private MetaColumnConfWrapper metaColumnConfWrapper;
 
     @Override
-    public Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(String dbName, String sqlText) {
+    public Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(Long dbId, String sqlText) {
 
-        Assert.hasText(dbName,"dbName is null");
+        Assert.notNull(dbId,"dbName is null");
         Assert.hasText(sqlText,"sqlText is null");
         //sql 校验
-        DataSource dataSource = ReportDbUtil.getDataSource(dbName);
+        MetaDbConfQuery query = new MetaDbConfQuery();
+        Result<MetaDbConf> dbRs = metaDbConfWrapper.get(query);
+        if(dbRs.hasValue()){
+            return Result.error(ReportErrors.DATASOURCE_ERROR);
+        }
+        DataSource dataSource = ReportDbUtil.getDataSource(dbRs.getValue().getDbValue());
         if(dataSource == null){
-            //
+            return Result.error(ReportErrors.DATASOURCE_ERROR);
         }
         SqlQueryService sqlQueryService = SqlQueryerFactory.create(dataSource);
         List<ReportMetaDataColumn> list = sqlQueryService.parseMetaDataColumns(sqlText);
