@@ -32,6 +32,7 @@ import java.util.List;
  4:接口提供
  5:计算列
  6:json的情况
+ 7: 先explain 多少行
  */
 @Controller
 @RequestMapping("/report")

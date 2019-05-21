@@ -64,7 +64,7 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         //sql 校验
         MetaDbConfQuery query = new MetaDbConfQuery();
         Result<MetaDbConf> dbRs = metaDbConfWrapper.get(query);
-        if(dbRs.hasValue()){
+        if(!dbRs.hasValue()){
             return Result.error(ReportErrors.DATASOURCE_ERROR);
         }
         DataSource dataSource = ReportDbUtil.getDataSource(dbRs.getValue().getDbValue());
