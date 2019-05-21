@@ -61,7 +61,9 @@ public class TableFacadeServiceImpl implements TableFacadeService {
 
         Assert.notNull(dbId,"dbName is null");
         Assert.hasText(sqlText,"sqlText is null");
-        //sql 校验
+        if(!ReportDbUtil.checkSql(sqlText)){
+            return Result.error(ReportErrors.SQL_ERROR);
+        }
         MetaDbConfQuery query = new MetaDbConfQuery();
         Result<MetaDbConf> dbRs = metaDbConfWrapper.get(query);
         if(!dbRs.hasValue()){
@@ -74,7 +76,7 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         SqlQueryService sqlQueryService = SqlQueryerFactory.create(dataSource);
         List<ReportMetaDataColumn> list = sqlQueryService.parseMetaDataColumns(sqlText);
         if(CollectionUtils.isEmpty(list)){
-            //TODO
+            return Result.error(ReportErrors.SQL_ERROR);
         }
         return Result.success(list);
     }

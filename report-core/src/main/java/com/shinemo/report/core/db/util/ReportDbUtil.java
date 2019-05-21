@@ -50,4 +50,20 @@ public class ReportDbUtil {
         }
 
     }
+
+    public static boolean checkSql(String sqlText) {
+        sqlText = sqlText.trim();
+        sqlText = sqlText.toLowerCase();
+        int idx = sqlText.indexOf(';');
+        if (idx> 0 && idx != sqlText.length() - 1) {
+            return false;
+        }
+        if(sqlText.length() < 16){
+            return false;
+        }
+        if(!sqlText.startsWith("select")){
+            return false;
+        }
+        return true;
+    }
 }

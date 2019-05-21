@@ -8,4 +8,5 @@ public interface ReportErrors {
     ErrorInfo SERVICE_ERROR = new ErrorInfo(300002, "SERVICE_ERROR", "服务错误");
 
     ErrorInfo DATASOURCE_ERROR = new ErrorInfo(300003, "DATASOURCE_ERROR", "数据源为空");
+    ErrorInfo SQL_ERROR = new ErrorInfo(300003, "SQL_ERROR", "sql不合法");
 }
