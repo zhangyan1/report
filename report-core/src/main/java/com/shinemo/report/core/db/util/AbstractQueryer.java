@@ -155,7 +155,7 @@ public abstract class AbstractQueryer {
      * @param sqlText 原sql语句
      * @return 预处理后的sql语句
      */
-    protected String preprocessSqlText(final String sqlText) {
+    protected String preprocessSqlText(String sqlText) {
         return sqlText;
     }
 

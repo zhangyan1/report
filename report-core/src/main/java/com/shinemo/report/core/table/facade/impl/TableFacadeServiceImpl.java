@@ -106,7 +106,7 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         }
         DataSource dataSource = ReportDbUtil.getDataSource("buycenter");
         if(dataSource == null){
-            //TODO 返回
+            return Result.error(ReportErrors.DATASOURCE_ERROR);
         }
         List<MetaHeader> columnLists = Lists.newArrayList();
         columnRs.getValue().getRows().sort(Comparator.comparingInt(val->val.getWeight()));
