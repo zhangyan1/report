@@ -1,5 +1,6 @@
 package com.shinemo.report.test.core.consumer;
 import com.shinemo.client.common.Result;
+import com.shinemo.client.util.GsonUtil;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.table.domain.TableInfoDO;
 import com.shinemo.report.client.table.domain.TableQueryParamDO;
@@ -24,7 +25,7 @@ public class TableServiceTest {
     @Test
     public void testReportMetaDataColumn(){
         Result<List<ReportMetaDataColumn>> rs =  tableFacadeService.getReportMetaDataColumn(1L,"select * from buy_order_new limit 1");
-        System.out.println(rs);
+        System.out.println(GsonUtil.toJson(rs));
     }
 
     @Test
