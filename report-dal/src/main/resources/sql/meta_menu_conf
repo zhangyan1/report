@@ -8,12 +8,12 @@ CREATE TABLE `meta_menu_conf` (
   `status` int  NOT NULL COMMENT '删除状态 1-正常 0-删除',
   `menu_name` varchar(64) not null comment '菜单名称',
   `parent_id` int(11) DEFAULT  null comment '父菜单id',
-  `path`       varchar(64) DEFAULT  null comment '菜单路径',
-  `is_leaf`  bigint DEFAULT  null comment '是否叶子节点',
+  `path`      varchar(64) DEFAULT  null comment '菜单路径',
+  `is_leaf`   bigint DEFAULT  null comment '是否叶子节点',
   `report_id` bigint not null comment '模板id',
   `weight`   int(4) DEFAULT  '0' comment '权重',
   `channel_id`   int(1) NOT NULL comment '1-mydb 2-企管 3-礼品商后台',
   `sub_channel_id`  bigint NOT NULL comment '子id 企管的为scopeId 礼品商的为礼品商id',
-  `flag` bigint DEFAULT '0' comment '1-所有channel_id可见 2-所有子channel_id可见'
+  `flag` bigint DEFAULT '0' comment '1-所有channel_id可见 2-所有子channel_id可见',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='菜单配置表';
