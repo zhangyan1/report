@@ -10,19 +10,14 @@
 		<result property="gmtModified" column="gmt_modified"/>
 		<result property="createUserId" column="create_user_id"/>
 		<result property="createUserName" column="create_user_name"/>
-		<result property="appType" column="app_type"/>
 		<result property="status" column="status"/>
-		<result property="user" column="user"/>
-		<result property="passwd" column="passwd"/>
 		<result property="dbName" column="db_name"/>
-		<result property="jdbcUrl" column="jdbc_url"/>
-		<result property="jdbcDriver" column="jdbc_driver"/>
-		<result property="type" column="type"/>
+        <result property="dbValue" column="db_value"/>
 	</resultMap>
 
 	<!-- 数据库字段 -->
 	<sql id="columns">
-		id, gmt_create, gmt_modified, create_user_id, create_user_name, app_type, status, user, passwd, db_name, jdbc_url, jdbc_driver, type
+		id, gmt_create, gmt_modified, create_user_id, create_user_name, status, db_name, db_value
 	</sql>
 
     <sql id="table">
@@ -35,18 +30,10 @@
             <choose>
                 <when test="id != null">and id = #{id}</when>
                 <otherwise>
-					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
-					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
 					<if test="createUserId != null">and create_user_id = #{createUserId}</if>
-					<if test="createUserName != null">and create_user_name = #{createUserName}</if>
-					<if test="appType != null">and app_type = #{appType}</if>
 					<if test="status != null">and status = #{status}</if>
-					<if test="user != null">and user = #{user}</if>
-					<if test="passwd != null">and passwd = #{passwd}</if>
 					<if test="dbName != null">and db_name = #{dbName}</if>
-					<if test="jdbcUrl != null">and jdbc_url = #{jdbcUrl}</if>
-					<if test="jdbcDriver != null">and jdbc_driver = #{jdbcDriver}</if>
-					<if test="type != null">and type = #{type}</if>
+                    <if test="dbValue != null">and db_value = #{dbValue}</if>
                 </otherwise>
             </choose>
         </where>
@@ -113,29 +100,14 @@
                     <if test="createUserName != null">
 						create_user_name,
 					</if>
-                    <if test="appType != null">
-						app_type,
-					</if>
                     <if test="status != null">
 						status,
-					</if>
-                    <if test="user != null">
-						user,
-					</if>
-                    <if test="passwd != null">
-						passwd,
 					</if>
                     <if test="dbName != null">
 						db_name,
 					</if>
-                    <if test="jdbcUrl != null">
-						jdbc_url,
-					</if>
-                    <if test="jdbcDriver != null">
-						jdbc_driver,
-					</if>
-                    <if test="type != null">
-						type,
+                    <if test="dbValue != null">
+                        db_value,
 					</if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -150,29 +122,14 @@
                     <if test="createUserName != null">
 						#{createUserName, jdbcType=VARCHAR},
                     </if>
-                    <if test="appType != null">
-						#{appType, jdbcType=INTEGER},
-                    </if>
                     <if test="status != null">
 						#{status, jdbcType=INTEGER},
-                    </if>
-                    <if test="user != null">
-						#{user, jdbcType=VARCHAR},
-                    </if>
-                    <if test="passwd != null">
-						#{passwd, jdbcType=VARCHAR},
                     </if>
                     <if test="dbName != null">
 						#{dbName, jdbcType=VARCHAR},
                     </if>
-                    <if test="jdbcUrl != null">
-						#{jdbcUrl, jdbcType=VARCHAR},
-                    </if>
-                    <if test="jdbcDriver != null">
-						#{jdbcDriver, jdbcType=VARCHAR},
-                    </if>
-                    <if test="type != null">
-						#{type, jdbcType=INTEGER},
+                    <if test="dbValue!= null">
+						#{dbValue, jdbcType=VARCHAR},
                     </if>
         </trim>
     </insert>
@@ -188,29 +145,14 @@
             <if test="createUserName != null">
                 create_user_name = #{createUserName, jdbcType=VARCHAR},
             </if>
-            <if test="appType != null">
-                app_type = #{appType, jdbcType=INTEGER},
-            </if>
             <if test="status != null">
                 status = #{status, jdbcType=INTEGER},
-            </if>
-            <if test="user != null">
-                user = #{user, jdbcType=VARCHAR},
-            </if>
-            <if test="passwd != null">
-                passwd = #{passwd, jdbcType=VARCHAR},
             </if>
             <if test="dbName != null">
                 db_name = #{dbName, jdbcType=VARCHAR},
             </if>
-            <if test="jdbcUrl != null">
-                jdbc_url = #{jdbcUrl, jdbcType=VARCHAR},
-            </if>
-            <if test="jdbcDriver != null">
-                jdbc_driver = #{jdbcDriver, jdbcType=VARCHAR},
-            </if>
-            <if test="type != null">
-                type = #{type, jdbcType=INTEGER}
+            <if test="dbValue != null">
+                db_value = #{dbValue, jdbcType=VARCHAR},
             </if>
         </set>
         WHERE
