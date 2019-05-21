@@ -59,7 +59,7 @@ public class TableFacadeServiceImpl implements TableFacadeService {
     @Override
     public Result<List<ReportMetaDataColumn>> getReportMetaDataColumn(Long dbId, String sqlText) {
 
-        Assert.notNull(dbId,"dbName is null");
+        Assert.notNull(dbId,"dbId is null");
         Assert.hasText(sqlText,"sqlText is null");
         if(!ReportDbUtil.checkSql(sqlText)){
             return Result.error(ReportErrors.SQL_ERROR);
@@ -83,13 +83,26 @@ public class TableFacadeServiceImpl implements TableFacadeService {
 
     @Override
     public Result<TableInfoDO> getTableInfo(Long templateId, List<TableQueryParamDO> params) {
+
+        ReportParameter param = new ReportParameter();
         //查找模板相关信息
         MetaReportTemplateQuery query = new MetaReportTemplateQuery();
         query.setId(templateId);
         Result<MetaReportTemplate> rs = mataReportTemplateWrapper.get(query);
         if(!rs.hasValue()){
-            log.error("");
+            log.error("[getTableInfo] template error:{}",rs);
             return Result.error(rs.getError());
+        }
+        //数据源
+        MetaDbConfQuery dbConfQueryquery = new MetaDbConfQuery();
+        dbConfQueryquery.setId(templateId);
+        Result<MetaDbConf> dbRs = metaDbConfWrapper.get(dbConfQueryquery);
+        if(!dbRs.hasValue()){
+            return Result.error(ReportErrors.DATASOURCE_ERROR);
+        }
+        DataSource dataSource = ReportDbUtil.getDataSource(dbRs.getValue().getDbValue());
+        if(dataSource == null){
+            return Result.error(ReportErrors.DATASOURCE_ERROR);
         }
         //查找列配置
         MetaColumnConfQuery columnQuery = new MetaColumnConfQuery();
@@ -98,37 +111,19 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         if(!columnRs.hasValue()){
             return Result.error(columnRs.getError());
         }
+        //查询参数
         MetaParamConfQuery paramQuery = new MetaParamConfQuery();
         paramQuery.setReportId(templateId);
         Result<ListVO<MetaParamConf>> paramRs = metaParamConfWrapper.find(paramQuery);
-        if(paramRs.hasValue()){
-            //TODO 进行sql重封装
+        if(paramRs.hasValue()&& !CollectionUtils.isEmpty(paramRs.getValue().getRows())){
+            param.setParamConfs(paramRs.getValue().getRows());
         }
-        DataSource dataSource = ReportDbUtil.getDataSource("buycenter");
-        if(dataSource == null){
-            return Result.error(ReportErrors.DATASOURCE_ERROR);
-        }
-        List<MetaHeader> columnLists = Lists.newArrayList();
-        columnRs.getValue().getRows().sort(Comparator.comparingInt(val->val.getWeight()));
-        Collections.reverse(columnRs.getValue().getRows());
-        for(int i=0;i<columnRs.getValue().getRows().size();i++){
-            MetaColumnConf conf = columnRs.getValue().getRows().get(i);
-            MetaHeader iter = new MetaHeader();
-            iter.setIndex(i);
-            iter.setKey(conf.getColumnName());
-            iter.setMainKey(conf.getMainColumnName());
-            iter.setValue(conf.getColumnShowName());
-            iter.setOriginDataType(conf.getOrginDataType());
-            iter.setDataType(conf.getDataType());
-            columnLists.add(iter);
-        }
-        ReportParameter param = new ReportParameter();
         param.setSqlText(rs.getValue().getSqlText());
-        param.setMetaHeaders(columnLists);
+        param.setColumnConfs(columnRs.getValue().getRows());
         SqlQueryService sqlQueryService = SqlQueryerFactory.create(dataSource,param);
         List<Map<String,Object>> rowsList = sqlQueryService.getMetaDataRows();
         SheetInfoDO sheetInfoDO = new SheetInfoDO();
-        sheetInfoDO.setHeaders(columnLists);
+        sheetInfoDO.setHeaders(sqlQueryService.getMetaHeaders());
         sheetInfoDO.setRows(rowsList);
         TableInfoDO tableInfoDO = new TableInfoDO();
         tableInfoDO.setFileName(rs.getValue().getName());

@@ -1,7 +1,9 @@
 package com.shinemo.report.core.db.util;
 
 
+import com.google.common.collect.Lists;
 import com.shinemo.client.exception.BizException;
+import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.db.domain.ReportParameter;
 import com.shinemo.report.client.db.domain.ReportQueryParamItem;
@@ -20,14 +22,14 @@ public abstract class AbstractQueryer {
 
     protected final DataSource dataSource;
     protected final ReportParameter parameter;
-    protected final List<MetaHeader> metaHeaders;
+    protected final List<MetaColumnConf> columnConfs;
 
     protected AbstractQueryer(final DataSource dataSource, final ReportParameter parameter) {
         this.dataSource = dataSource;
         this.parameter = parameter;
-        this.metaHeaders = this.parameter == null ?
+        this.columnConfs = this.parameter == null ?
             new ArrayList<>(0) :
-            new ArrayList<>(this.parameter.getMetaHeaders());
+            new ArrayList<>(this.parameter.getColumnConfs());
     }
 
     /**
@@ -99,7 +101,21 @@ public abstract class AbstractQueryer {
     }
 
     public List<MetaHeader> getMetaHeaders() {
-        return this.metaHeaders;
+        List<MetaHeader> columnLists = Lists.newArrayList();
+        this.columnConfs.sort(Comparator.comparingInt(val->val.getWeight()));
+        Collections.reverse(this.columnConfs);
+        for(int i=0;i<this.columnConfs.size();i++){
+            MetaColumnConf conf = this.columnConfs.get(i);
+            MetaHeader iter = new MetaHeader();
+            iter.setIndex(i);
+            iter.setKey(conf.getColumnName());
+            iter.setMainKey(conf.getMainColumnName());
+            iter.setValue(conf.getColumnShowName());
+            iter.setOriginDataType(conf.getOrginDataType());
+            iter.setDataType(conf.getDataType());
+            columnLists.add(iter);
+        }
+        return columnLists;
     }
 
     /**
@@ -115,7 +131,7 @@ public abstract class AbstractQueryer {
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
             rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText()));
-            return this.getMetaDataRows(rs, this.parameter.getMetaHeaders());
+            return this.getMetaDataRows(rs, this.getMetaHeaders());
         } catch (final Exception ex) {
             log.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
             throw new BizException();
