@@ -1,6 +1,7 @@
 package com.shinemo.report.client.table.facade;
 
 import com.shinemo.client.common.Result;
+import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.table.domain.TableInfoDO;
 import com.shinemo.report.client.table.domain.TableQueryParamDO;
@@ -23,5 +24,10 @@ public interface TableFacadeService {
      * @return
      */
     Result<TableInfoDO> getTableInfo(Long templateId, List<TableQueryParamDO> params);
-
+    /**
+     * 获取查询条件
+     * @param templateId
+     * @return
+     */
+    Result<List<MetaParamConf>>getQueryParams(Long templateId);
 }

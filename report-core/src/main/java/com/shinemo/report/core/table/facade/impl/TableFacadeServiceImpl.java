@@ -11,6 +11,7 @@ import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
 import com.shinemo.report.client.base.conf.query.MetaDbConfQuery;
 import com.shinemo.report.client.base.conf.query.MetaParamConfQuery;
 import com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery;
+import com.shinemo.report.client.common.domain.DeleteStatusEnum;
 import com.shinemo.report.client.common.domain.ReportErrors;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.db.domain.ReportParameter;
@@ -129,5 +130,18 @@ public class TableFacadeServiceImpl implements TableFacadeService {
         tableInfoDO.setFileName(rs.getValue().getName());
         tableInfoDO.setSheetInfos(Lists.newArrayList(sheetInfoDO));
         return Result.success(tableInfoDO);
+    }
+
+    @Override
+    public Result<List<MetaParamConf>> getQueryParams(Long templateId) {
+        MetaParamConfQuery query = new MetaParamConfQuery();
+        query.setReportId(templateId);
+        query.setPageEnable(false);
+        query.setStatus(DeleteStatusEnum.NORMAL.getId());
+        Result<ListVO<MetaParamConf>> rs = metaParamConfWrapper.find(query);
+        if(!rs.hasValue()){
+            return Result.error(rs.getError());
+        }
+        return Result.success(rs.getValue().getRows());
     }
 }
