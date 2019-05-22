@@ -36,7 +36,7 @@ public class StringPaserUtil {
         String regexTwo = "(and\\s+\\w+?=\\$.*?})";
         Pattern pattern = Pattern.compile(regexOne);
         Matcher matcher = pattern.matcher(sql);
-        sql = matcher.replaceAll("where");
+        sql = matcher.replaceAll("where 1=1");
         pattern = Pattern.compile(regexTwo);
         matcher = pattern.matcher(sql);
         sql = matcher.replaceAll("");
