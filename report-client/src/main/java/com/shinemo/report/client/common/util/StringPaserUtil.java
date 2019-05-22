@@ -1,6 +1,10 @@
 package com.shinemo.report.client.common.util;
 
+import com.shinemo.report.client.table.domain.TableQueryParamDO;
+import org.apache.commons.lang.text.StrSubstitutor;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,6 +45,24 @@ public class StringPaserUtil {
         matcher = pattern.matcher(sql);
         sql = matcher.replaceAll("");
         return sql;
+    }
+
+    /**
+     * 根据sql 和查询参数 获取组装后的sql
+     * @param sql
+     * @param params
+     * @return
+     */
+    public static String getSqlByParams(String sql,List<TableQueryParamDO> params){
+        if(params!=null&&params.size()>0){
+            Map<String, String> replaceValue = new HashMap<>();
+            for(TableQueryParamDO iter:params){
+                replaceValue.put(iter.getKey(),iter.getValue());
+            }
+            StrSubstitutor strSubstitutor = new StrSubstitutor(replaceValue);
+            sql = strSubstitutor.replace(sql);
+        }
+        return sqlFormatByRex(sql);
     }
 
 
