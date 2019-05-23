@@ -25,11 +25,11 @@ public class MetaParamConf extends BaseDO {
 	*/
 	private Integer status;
 	/**
-	* 1-下拉框 2-文本框 3-日期框
+	* @see ParamTypeEnum
 	*/
 	private Integer type;
 	/**
-	* 1-手动配置 2-sql动态获取(下拉框时生效)
+	*  //TODO 1-手动配置 2-sql动态获取(下拉框时生效)
 	*/
 	private Integer sourceType;
 	/**

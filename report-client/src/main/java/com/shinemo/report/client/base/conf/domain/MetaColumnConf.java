@@ -37,7 +37,7 @@ public class MetaColumnConf extends BaseDO {
 	*/
 	private String columnShowName;
 	/**
-	* 1-普通列 2-计算子列 3-计算列
+	* @see ColumnTypeEnum
 	*/
 	private Integer columnType;
 	/**
@@ -45,11 +45,11 @@ public class MetaColumnConf extends BaseDO {
 	*/
 	private Integer weight;
 	/**
-	* 排序类型 1-升序 2-降序
+	* @see SortTypeEnum
 	*/
 	private Integer sortType;
 	/**
-	* 数据类型 0-文本 1-数字 2-json对象
+	* @see DataTypeEnum
 	*/
 	private Integer dataType;
 	/**

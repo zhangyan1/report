@@ -33,7 +33,7 @@ public class MetaReportTemplate extends BaseDO {
 	*/
 	private Integer status;
 	/**
-	* 类型 1-sql配置 2-表名
+	* @see TemplateTypeEnum 类型 1-sql配置 2-表名
 	*/
 	private Integer type;
 	/**
@@ -53,7 +53,7 @@ public class MetaReportTemplate extends BaseDO {
 	 */
 	private String name;
 	/**
-	* 扩展标位 1-需要审核
+	*  @see TemplateFlag 扩展标位
 	*/
 	private Long flag;
 }
