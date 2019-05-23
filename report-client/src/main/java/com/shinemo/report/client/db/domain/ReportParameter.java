@@ -17,5 +17,5 @@ public class ReportParameter {
     private String sqlText;
     private List<MetaParamConf> paramConfs;
     private List<TableQueryParamDO> queryParamDOS;
-    private Long Limit;
+    private Long limit;
 }
