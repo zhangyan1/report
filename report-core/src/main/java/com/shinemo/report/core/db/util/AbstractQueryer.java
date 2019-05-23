@@ -20,7 +20,7 @@ import java.util.*;
 @Slf4j
 public abstract class AbstractQueryer {
 
-    protected static final Integer LIMIT = 1;
+    protected static final Long LIMIT = 1L;
 
     protected final DataSource dataSource;
     protected final ReportParameter parameter;
@@ -132,7 +132,7 @@ public abstract class AbstractQueryer {
             log.debug(this.parameter.getSqlText());
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText(),LIMIT));
+            rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText(),this.parameter.getLimit()));
             return this.getMetaDataRows(rs, this.getMetaHeaders());
         } catch (final Exception ex) {
             log.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
@@ -173,7 +173,7 @@ public abstract class AbstractQueryer {
      * @param sqlText 原sql语句
      * @return 预处理后的sql语句
      */
-    protected String preprocessSqlText(String sqlText,Integer limit) {
+    protected String preprocessSqlText(String sqlText,Long limit) {
         return sqlText;
     }
 

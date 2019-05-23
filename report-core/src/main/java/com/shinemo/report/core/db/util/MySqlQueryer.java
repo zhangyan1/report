@@ -1,6 +1,7 @@
 package com.shinemo.report.core.db.util;
 
 
+import com.shinemo.report.client.common.util.StringPaserUtil;
 import com.shinemo.report.client.db.domain.ReportParameter;
 import org.apache.commons.lang3.StringUtils;
 import javax.sql.DataSource;
@@ -17,7 +18,7 @@ public class MySqlQueryer extends AbstractQueryer implements SqlQueryService{
     }
 
     @Override
-    protected String preprocessSqlText(String sqlText,Integer limit){
+    protected String preprocessSqlText(String sqlText,Long limit){
         if(limit.equals(LIMIT)){//获取元信息
             sqlText = StringUtils.stripEnd(sqlText.trim(), ";");
             Pattern pattern = Pattern.compile("limit.*?$", Pattern.CASE_INSENSITIVE);
@@ -27,7 +28,7 @@ public class MySqlQueryer extends AbstractQueryer implements SqlQueryService{
             }
             sqlText = sqlText.split("where")[0];
         }else{
-
+            sqlText = StringPaserUtil.getSqlByParams(sqlText,this.parameter.getQueryParamDOS());
         }
         return sqlText + "limit " +limit;
     }
