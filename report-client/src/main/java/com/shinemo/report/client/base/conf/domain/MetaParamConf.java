@@ -29,7 +29,7 @@ public class MetaParamConf extends BaseDO {
 	*/
 	private Integer type;
 	/**
-	*  //TODO 1-手动配置 2-sql动态获取(下拉框时生效)
+	*  @see SourceTypeEnum
 	*/
 	private Integer sourceType;
 	/**
