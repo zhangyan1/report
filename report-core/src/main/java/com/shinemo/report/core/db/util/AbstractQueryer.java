@@ -20,6 +20,8 @@ import java.util.*;
 @Slf4j
 public abstract class AbstractQueryer {
 
+    protected static final Integer LIMIT = 1;
+
     protected final DataSource dataSource;
     protected final ReportParameter parameter;
     protected final List<MetaColumnConf> columnConfs;
@@ -46,7 +48,7 @@ public abstract class AbstractQueryer {
             log.debug("[parseMetaDataColumns] Parse Report MetaDataColumns SQL:{},", sqlText);
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(this.preprocessSqlText(sqlText));
+            rs = stmt.executeQuery(this.preprocessSqlText(sqlText,LIMIT));
             final ResultSetMetaData rsMataData = rs.getMetaData();
             final int count = rsMataData.getColumnCount();
             columns = new ArrayList<>(count);
@@ -130,7 +132,7 @@ public abstract class AbstractQueryer {
             log.debug(this.parameter.getSqlText());
             conn = this.getJdbcConnection();
             stmt = conn.createStatement();
-            rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText()));
+            rs = stmt.executeQuery(this.preprocessSqlText(this.parameter.getSqlText(),LIMIT));
             return this.getMetaDataRows(rs, this.getMetaHeaders());
         } catch (final Exception ex) {
             log.error(String.format("SqlText:%s，Msg:%s", this.parameter.getSqlText(), ex));
@@ -171,7 +173,7 @@ public abstract class AbstractQueryer {
      * @param sqlText 原sql语句
      * @return 预处理后的sql语句
      */
-    protected String preprocessSqlText(String sqlText) {
+    protected String preprocessSqlText(String sqlText,Integer limit) {
         return sqlText;
     }
 

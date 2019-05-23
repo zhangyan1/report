@@ -17,14 +17,18 @@ public class MySqlQueryer extends AbstractQueryer implements SqlQueryService{
     }
 
     @Override
-    protected String preprocessSqlText(String sqlText){
-        sqlText = StringUtils.stripEnd(sqlText.trim(), ";");
-        Pattern pattern = Pattern.compile("limit.*?$", Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(sqlText);
-        if (matcher.find()) {
-            sqlText = matcher.replaceFirst("");
+    protected String preprocessSqlText(String sqlText,Integer limit){
+        if(limit.equals(LIMIT)){//获取元信息
+            sqlText = StringUtils.stripEnd(sqlText.trim(), ";");
+            Pattern pattern = Pattern.compile("limit.*?$", Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(sqlText);
+            if (matcher.find()) {
+                sqlText = matcher.replaceFirst("");
+            }
+            sqlText = sqlText.split("where")[0];
+        }else{
+
         }
-        sqlText = sqlText.split("where")[0];
-        return sqlText + "limit 1";
+        return sqlText + "limit " +limit;
     }
 }
