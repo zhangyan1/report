@@ -35,7 +35,7 @@ public class MetaParamConf extends BaseDO {
 	/**
 	* 查询参数名称
 	*/
-	private String queryName;
+	private String queryKey;
 	/**
 	* 默认展示的key(下拉框时有用)
 	*/

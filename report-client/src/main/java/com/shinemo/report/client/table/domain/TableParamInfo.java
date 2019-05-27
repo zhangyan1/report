@@ -14,8 +14,8 @@ public class TableParamInfo extends BaseDO{
     private String defaultKeyValue;
     private String defaultRealValue;
     private String contend;
-    private Long reportId;
     private Long dataSourceId;
     private Long flag;
+    private Integer type;
 
 }

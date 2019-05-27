@@ -11,7 +11,7 @@
 		<result property="status" column="status"/>
 		<result property="type" column="type"/>
 		<result property="sourceType" column="source_type"/>
-		<result property="queryName" column="query_name"/>
+		<result property="queryKey" column="query_key"/>
 		<result property="defaultKeyValue" column="default_key_value"/>
 		<result property="defaultRealValue" column="default_real_value"/>
 		<result property="contend" column="contend"/>
@@ -22,7 +22,8 @@
 
 	<!-- 数据库字段 -->
 	<sql id="columns">
-		id, gmt_create, gmt_modified, status, type, source_type, query_name, default_key_value, default_real_value, contend, report_id, data_source_id, flag
+		id, gmt_create, gmt_modified, status, type, source_type, query_key, default_key_value, default_real_value,
+		contend, report_id, data_source_id, flag
 	</sql>
 
     <sql id="table">
@@ -35,18 +36,11 @@
             <choose>
                 <when test="id != null">and id = #{id}</when>
                 <otherwise>
-					<if test="gmtCreate != null">and gmt_create = #{gmtCreate}</if>
-					<if test="gmtModified != null">and gmt_modified = #{gmtModified}</if>
 					<if test="status != null">and status = #{status}</if>
 					<if test="type != null">and type = #{type}</if>
 					<if test="sourceType != null">and source_type = #{sourceType}</if>
-					<if test="queryName != null">and query_name = #{queryName}</if>
-					<if test="defaultKeyValue != null">and default_key_value = #{defaultKeyValue}</if>
-					<if test="defaultRealValue != null">and default_real_value = #{defaultRealValue}</if>
-					<if test="contend != null">and contend = #{contend}</if>
 					<if test="reportId != null">and report_id = #{reportId}</if>
 					<if test="dataSourceId != null">and data_source_id = #{dataSourceId}</if>
-					<if test="flag != null">and flag = #{flag}</if>
                 </otherwise>
             </choose>
         </where>
@@ -116,8 +110,8 @@
                     <if test="sourceType != null">
 						source_type,
 					</if>
-                    <if test="queryName != null">
-						query_name,
+                    <if test="queryKey != null">
+                        query_key,
 					</if>
                     <if test="defaultKeyValue != null">
 						default_key_value,
@@ -153,8 +147,8 @@
                     <if test="sourceType != null">
 						#{sourceType, jdbcType=INTEGER},
                     </if>
-                    <if test="queryName != null">
-						#{queryName, jdbcType=VARCHAR},
+                    <if test="queryKey != null">
+						#{queryKey, jdbcType=VARCHAR},
                     </if>
                     <if test="defaultKeyValue != null">
 						#{defaultKeyValue, jdbcType=VARCHAR},
@@ -191,8 +185,8 @@
             <if test="sourceType != null">
                 source_type = #{sourceType, jdbcType=INTEGER},
             </if>
-            <if test="queryName != null">
-                query_name = #{queryName, jdbcType=VARCHAR},
+            <if test="queryKey != null">
+                query_key = #{queryKey, jdbcType=VARCHAR},
             </if>
             <if test="defaultKeyValue != null">
                 default_key_value = #{defaultKeyValue, jdbcType=VARCHAR},
