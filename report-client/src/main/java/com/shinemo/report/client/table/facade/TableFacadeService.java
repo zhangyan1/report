@@ -5,6 +5,7 @@ import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.db.domain.ReportMetaDataColumn;
 import com.shinemo.report.client.table.domain.TableInfoDO;
 import com.shinemo.report.client.table.domain.TableQueryParamDO;
+import com.shinemo.report.client.table.domain.TemplateRequest;
 
 import java.util.List;
 
@@ -31,7 +32,4 @@ public interface TableFacadeService {
      */
     Result<List<MetaParamConf>>getQueryParams(Long templateId);
 
-
-
-    Result<Void> addTemplate();
 }
