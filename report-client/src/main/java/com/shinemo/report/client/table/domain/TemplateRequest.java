@@ -37,7 +37,7 @@ public class TemplateRequest extends BaseDO{
      */
     private String columnListInfo;
     /**
-     * 查询参数设置
+     * List<TableParamInfo> 查询参数设置
      */
     private String paramListInfo;
 
