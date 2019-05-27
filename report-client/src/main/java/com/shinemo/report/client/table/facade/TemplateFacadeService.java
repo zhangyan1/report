@@ -2,6 +2,7 @@ package com.shinemo.report.client.table.facade;
 
 import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaDbConf;
+import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.table.domain.TemplateRequest;
 
 import java.util.List;
@@ -30,6 +31,12 @@ public interface TemplateFacadeService {
      * @return
      */
     Result<Void> detelteTemplate(Long id);
+    /**
+     * 获取模板所有的查询条件
+     * @param id
+     * @return
+     */
+    Result<List<MetaParamConf>> getTemplateQueryParams(Long id);
 
 
 }

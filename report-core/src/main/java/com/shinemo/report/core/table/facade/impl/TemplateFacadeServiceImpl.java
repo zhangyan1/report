@@ -2,6 +2,7 @@ package com.shinemo.report.core.table.facade.impl;
 
 import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaDbConf;
+import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.table.domain.TemplateRequest;
 import com.shinemo.report.client.table.facade.TemplateFacadeService;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +32,11 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
 
     @Override
     public Result<Void> detelteTemplate(Long id) {
+        return null;
+    }
+
+    @Override
+    public Result<List<MetaParamConf>> getTemplateQueryParams(Long id) {
         return null;
     }
 }
