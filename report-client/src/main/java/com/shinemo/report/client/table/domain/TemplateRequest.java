@@ -33,7 +33,7 @@ public class TemplateRequest extends BaseDO{
     private String templateName;
 
     /**
-     * 参数转换设置
+     * List<ColumnInfo> 参数转换设置
      */
     private String columnListInfo;
     /**
