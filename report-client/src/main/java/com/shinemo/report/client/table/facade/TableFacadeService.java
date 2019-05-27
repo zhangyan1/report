@@ -30,4 +30,8 @@ public interface TableFacadeService {
      * @return
      */
     Result<List<MetaParamConf>>getQueryParams(Long templateId);
+
+
+
+    Result<Void> addTemplate();
 }
