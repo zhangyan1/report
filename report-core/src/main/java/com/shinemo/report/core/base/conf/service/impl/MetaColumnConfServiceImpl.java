@@ -9,6 +9,7 @@ import com.shinemo.report.dal.base.conf.wrapper.MetaColumnConfWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class MetaColumnConfServiceImpl implements MetaColumnConfService {
@@ -27,12 +28,7 @@ public class MetaColumnConfServiceImpl implements MetaColumnConfService {
     }
 
     @Override
-    public Result<MetaColumnConf> saveMetaColumnConf(MetaColumnConf domain) {
-        return metaColumnConfWrapper.insert(domain);
-    }
-
-    @Override
-    public Result<MetaColumnConf> uptMetaColumnConf(MetaColumnConf domain) {
-        return metaColumnConfWrapper.update(domain);
+    public Result<Void> saveMetaColumnConfList(List<MetaColumnConf> lists) {
+        return null;
     }
 }

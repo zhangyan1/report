@@ -9,6 +9,7 @@ import com.shinemo.report.dal.base.conf.wrapper.MetaParamConfWrapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class MetaParamConfServiceImpl implements MetaParamConfService {
@@ -27,12 +28,9 @@ public class MetaParamConfServiceImpl implements MetaParamConfService {
     }
 
     @Override
-    public Result<MetaParamConf> saveMetaParamConf(MetaParamConf domain) {
-        return metaParamConfWrapper.insert(domain);
+    public Result<Void> saveMetaParamConfList(List<MetaParamConf> list) {
+        return null;
     }
 
-    @Override
-    public Result<MetaParamConf> uptMetaParamConf(MetaParamConf domain) {
-        return metaParamConfWrapper.update(domain);
-    }
+
 }

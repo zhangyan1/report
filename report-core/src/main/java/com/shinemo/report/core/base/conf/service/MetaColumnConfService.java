@@ -5,6 +5,8 @@ import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
 
+import java.util.List;
+
 public interface MetaColumnConfService {
 
     /**
@@ -23,16 +25,8 @@ public interface MetaColumnConfService {
 
     /**
      * 存储列设置
-     * @param domain
+     * @param
      * @return
      */
-    Result<MetaColumnConf> saveMetaColumnConf(MetaColumnConf domain);
-
-    /**
-     * 更新列设置
-     * @param domain
-     * @return
-     */
-    Result<MetaColumnConf> uptMetaColumnConf(MetaColumnConf domain);
-
+    Result<Void> saveMetaColumnConfList(List<MetaColumnConf> lists);
 }

@@ -5,6 +5,8 @@ import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.base.conf.query.MetaParamConfQuery;
 
+import java.util.List;
+
 public interface MetaParamConfService {
 
     /**
@@ -23,15 +25,10 @@ public interface MetaParamConfService {
 
     /**
      * 存储参数
-     * @param domain
+     * @param list
      * @return
      */
-    Result<MetaParamConf> saveMetaParamConf(MetaParamConf domain);
-    /**
-     * 更新参数
-     * @param domain
-     * @return
-     */
-    Result<MetaParamConf> uptMetaParamConf(MetaParamConf domain);
+    Result<Void> saveMetaParamConfList(List<MetaParamConf> list);
+
 
 }
