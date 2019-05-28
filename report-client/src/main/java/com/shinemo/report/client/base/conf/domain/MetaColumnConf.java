@@ -20,6 +20,8 @@ public class MetaColumnConf extends BaseDO {
 	private Long id;
 	private Date gmtCreate;
 	private Date gmtModified;
+
+	private Integer status;
 	/**
 	* 报表主键id
 	*/

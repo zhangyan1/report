@@ -1,14 +1,17 @@
 package com.shinemo.report.core.table.facade.impl;
 
+import com.google.gson.reflect.TypeToken;
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
 import com.shinemo.client.common.StatusEnum;
 import com.shinemo.client.exception.BizException;
+import com.shinemo.client.util.GsonUtil;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.base.conf.domain.MetaDbConf;
 import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.base.conf.domain.MetaReportTemplate;
 import com.shinemo.report.client.base.conf.query.MetaDbConfQuery;
+import com.shinemo.report.client.common.domain.DeleteStatusEnum;
 import com.shinemo.report.client.common.domain.ReportErrors;
 import com.shinemo.report.core.base.conf.service.MetaColumnConfService;
 import com.shinemo.report.core.base.conf.service.MetaDbConfService;
@@ -56,6 +59,7 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Result<Void> addTemplate(TemplateRequest request){
+
         Assert.notNull(request,"request is null");
         Assert.notNull(request.getUserInfo(),"userInfo is null");
         Assert.notNull(request.getSourceId(),"sourceId is null");
@@ -65,12 +69,12 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
         if(!rs.hasValue()){
             return Result.error(rs.getError());
         }
-        List<MetaColumnConf> confList = initColumnList(request);
+        List<MetaColumnConf> confList = initColumnList(request,rs.getValue());
         Result<Void> rz = metaColumnConfService.saveMetaColumnConfList(confList);
         if(!rz.isSuccess()){
             throw new BizException(rs.getError());
         }
-        List<MetaParamConf> paramList = initParamList(request);
+        List<MetaParamConf> paramList = initParamList(request,rs.getValue());
         Result<Void> rt = metaParamConfService.saveMetaParamConfList(paramList);
         if(!rt.isSuccess()){
             throw new BizException(rs.getError());
@@ -78,12 +82,25 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
         return Result.success();
     }
 
-    private List<MetaParamConf> initParamList(TemplateRequest request) {
-        return null;
+    private List<MetaParamConf> initParamList(TemplateRequest request,MetaReportTemplate template) {
+        List<MetaParamConf> list = GsonUtil.fromGson2Obj(request.getParamListInfo(),new TypeToken<List<MetaParamConf>>
+                (){}.getType());
+        for(MetaParamConf iter:list){
+            iter.setStatus(DeleteStatusEnum.NORMAL.getId());
+            iter.setReportId(template.getId());
+        }
+        return list;
     }
 
-    private List<MetaColumnConf> initColumnList(TemplateRequest request) {
-        return null;
+    private List<MetaColumnConf> initColumnList(TemplateRequest request,MetaReportTemplate template) {
+
+        List<MetaColumnConf> list = GsonUtil.fromGson2Obj(request.getColumnListInfo(),new TypeToken<List<MetaColumnConf>>
+                (){}.getType());
+        for(MetaColumnConf iter:list){
+            iter.setStatus(DeleteStatusEnum.NORMAL.getId());
+            iter.setReportId(template.getId());
+        }
+        return list;
     }
 
     private MetaReportTemplate initTemplate(TemplateRequest request){
