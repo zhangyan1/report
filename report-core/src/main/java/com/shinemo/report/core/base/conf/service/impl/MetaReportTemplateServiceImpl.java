@@ -1,10 +1,10 @@
-package com.shinemo.report.client.base.conf.service.impl;
+package com.shinemo.report.core.base.conf.service.impl;
 
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaReportTemplate;
 import com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery;
-import com.shinemo.report.client.base.conf.service.MetaReportTemplateService;
+import com.shinemo.report.core.base.conf.service.MetaReportTemplateService;
 import com.shinemo.report.dal.base.conf.wrapper.MetaReportTemplateWrapper;
 import org.springframework.stereotype.Service;
 

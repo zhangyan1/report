@@ -10,7 +10,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TemplateRequest extends BaseDO{
-
+    /**
+     * 用户信息
+     */
+    private UserInfo userInfo;
     /**
      * @see com.shinemo.report.client.base.conf.domain.TemplateTypeEnum
      */

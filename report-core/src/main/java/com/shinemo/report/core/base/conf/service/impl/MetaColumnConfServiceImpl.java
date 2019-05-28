@@ -1,10 +1,10 @@
-package com.shinemo.report.client.base.conf.service.impl;
+package com.shinemo.report.core.base.conf.service.impl;
 
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
-import com.shinemo.report.client.base.conf.service.MetaColumnConfService;
+import com.shinemo.report.core.base.conf.service.MetaColumnConfService;
 import com.shinemo.report.dal.base.conf.wrapper.MetaColumnConfWrapper;
 import org.springframework.stereotype.Service;
 

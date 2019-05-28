@@ -1,4 +1,4 @@
-package com.shinemo.report.client.base.conf.service;
+package com.shinemo.report.core.base.conf.service;
 
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
