@@ -7,6 +7,7 @@ import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
 import com.shinemo.report.core.base.conf.service.MetaColumnConfService;
 import com.shinemo.report.dal.base.conf.wrapper.MetaColumnConfWrapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -29,6 +30,9 @@ public class MetaColumnConfServiceImpl implements MetaColumnConfService {
 
     @Override
     public Result<Void> saveMetaColumnConfList(List<MetaColumnConf> lists) {
+        for(MetaColumnConf iter:lists){
+
+        }
         return null;
     }
 }

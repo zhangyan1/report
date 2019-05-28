@@ -21,10 +21,6 @@ public class MetaParamConf extends BaseDO {
 	private Date gmtCreate;
 	private Date gmtModified;
 	/**
-	* 状态 1-正常 0-删除
-	*/
-	private Integer status;
-	/**
 	* @see ParamTypeEnum
 	*/
 	private Integer type;
