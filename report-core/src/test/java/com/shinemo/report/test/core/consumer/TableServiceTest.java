@@ -24,7 +24,7 @@ public class TableServiceTest {
 
     @Test
     public void testReportMetaDataColumn(){
-        Result<List<ReportMetaDataColumn>> rs =  tableFacadeService.getReportMetaDataColumn(1L,"select * from buy_order_new limit 1");
+        Result<List<ReportMetaDataColumn>> rs =  tableFacadeService.getReportMetaDataColumn(1L,"select order_id as '订单id' from buy_order_new limit 1");
         System.out.println(GsonUtil.toJson(rs));
     }
 
