@@ -2,6 +2,7 @@ package com.shinemo.report.core.table.facade.impl;
 
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
+import com.shinemo.client.common.StatusEnum;
 import com.shinemo.client.exception.BizException;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.base.conf.domain.MetaDbConf;
@@ -85,8 +86,17 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
         return null;
     }
 
-    private MetaReportTemplate initTemplate(TemplateRequest request) {
-        return null;
+    private MetaReportTemplate initTemplate(TemplateRequest request){
+        MetaReportTemplate template = new MetaReportTemplate();
+        template.setCreateUserId(request.getUserInfo().getUid());
+        template.setCreateUserName(request.getUserInfo().getUserName());
+        template.setStatus(StatusEnum.NORMAL.getId());
+        template.setType(request.getTemplateType());
+        template.setFlag(request.getFlagHeper().getValue());
+        template.setMaxCount(request.getMaxCount());
+        template.setSourceId(request.getSourceId());
+        template.setName(request.getTemplateName());
+        return template;
     }
 
 
