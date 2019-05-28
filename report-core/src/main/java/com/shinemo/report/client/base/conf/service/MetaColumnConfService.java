@@ -1,5 +1,6 @@
 package com.shinemo.report.client.base.conf.service;
 
+import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.base.conf.query.MetaColumnConfQuery;
@@ -18,7 +19,7 @@ public interface MetaColumnConfService {
      * @param query
      * @return
      */
-    Result<MetaColumnConf> findMetaColumnConf(MetaColumnConfQuery query);
+    Result<ListVO<MetaColumnConf>> findMetaColumnConf(MetaColumnConfQuery query);
 
     /**
      * 存储列设置

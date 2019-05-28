@@ -18,7 +18,7 @@ public interface MetaDbConfService {
      * @param query
      * @return
      */
-    Result<ListVO<MetaDbConf>> getDbConf(MetaDbConfQuery query);
+    Result<MetaDbConf> getDbConf(MetaDbConfQuery query);
 
 
 }

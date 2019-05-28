@@ -33,7 +33,7 @@ public interface MetaReportTemplateService {
      * @param query
      * @return
      */
-    Result<ListVO<MetaReportTemplate>> getMetaReportTemplate(MetaReportTemplateQuery query);
+    Result<MetaReportTemplate> getMetaReportTemplate(MetaReportTemplateQuery query);
 
 
 
