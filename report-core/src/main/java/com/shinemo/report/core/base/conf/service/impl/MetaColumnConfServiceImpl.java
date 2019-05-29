@@ -30,9 +30,6 @@ public class MetaColumnConfServiceImpl implements MetaColumnConfService {
 
     @Override
     public Result<Void> saveMetaColumnConfList(List<MetaColumnConf> lists) {
-        for(MetaColumnConf iter:lists){
-
-        }
         return null;
     }
 }
