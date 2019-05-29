@@ -223,4 +223,46 @@
         WHERE
         id = #{id}
     </update>
+
+
+
+
+    <insert id="batchInsert" parameterMap="com.shinemo.report.client.base.conf.domain.MetaColumnConf">
+        insert into
+        meta_column_conf
+        <trim prefix="(" suffixOverrides="," suffix=")">
+            gmt_create,
+            gmt_modified,
+            status,
+            type,
+            source_type,
+            query_key,
+            default_key_value,
+            default_real_value,
+            contend,
+            report_id,
+            data_source_id,
+            flag
+        </trim>
+        values
+        <foreach collection="list" separator=","  item="entity">
+            (
+            now(),
+            now(),
+            #{entity.status},
+            #{entity.type},
+            #{entity.sourceType},
+            #{entity.queryKey},
+            #{entity.defaultKeyValue},
+            #{entity.defaultRealValue},
+            #{entity.contend},
+            #{entity.reportId},
+            #{entity.dataSourceId},
+            <![CDATA[(0 & ~#{entity.flagHelper.mask,jdbcType=BIGINT}) | #{entity.flagHelper.value,jdbcType=BIGINT}, ]]>
+        </foreach>
+    </insert>
+
+
+
+
 </mapper>
