@@ -10,6 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TemplateRequest extends BaseDO{
+
+
+    private Long templateId;
     /**
      * 用户信息
      */

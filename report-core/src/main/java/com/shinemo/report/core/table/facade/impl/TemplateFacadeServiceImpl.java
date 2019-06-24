@@ -58,7 +58,7 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<Void> addTemplate(TemplateRequest request){
+    public Result<Void> addTemplate(TemplateRequest request){//TODO 放入一个字段里面
 
         Assert.notNull(request,"request is null");
         Assert.notNull(request.getUserInfo(),"userInfo is null");
