@@ -10,6 +10,8 @@ import com.shinemo.report.client.base.conf.domain.MetaDbConf;
 import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.base.conf.domain.MetaReportTemplate;
 import com.shinemo.report.client.base.conf.query.MetaDbConfQuery;
+import com.shinemo.report.client.base.conf.query.MetaReportTemplateQuery;
+import com.shinemo.report.client.common.domain.DeleteStatusEnum;
 import com.shinemo.report.client.common.domain.ReportErrors;
 import com.shinemo.report.core.base.conf.service.MetaColumnConfService;
 import com.shinemo.report.core.base.conf.service.MetaDbConfService;
@@ -56,7 +58,6 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
     public Result<Void> addOrUptTemplate(TemplateRequest request){
 
         Assert.notNull(request,"request is null");
@@ -68,7 +69,7 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
         if(template.getId()!=null){
             rs = metaReportTemplateService.saveReportTemplate(template);
         }else{
-            rs = metaReportTemplateService.saveReportTemplate(template);
+            rs = metaReportTemplateService.uptReportTemplate(template);
         }
         if(!rs.hasValue()){
             return Result.error(rs.getError());
@@ -108,7 +109,20 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
 
     @Override
     public Result<Void> detelteTemplate(Long id) {
-        return null;
+        Assert.notNull(id,"templateId is null");
+        MetaReportTemplateQuery query = new MetaReportTemplateQuery();
+        query.setId(id);
+        Result<MetaReportTemplate> rs = metaReportTemplateService.getMetaReportTemplate(query);
+        if(!rs.hasValue()){
+            return Result.error(ReportErrors.TEMPLATE_NOT_EXIST);
+        }
+        MetaReportTemplate template = rs.getValue();
+        template.setStatus(DeleteStatusEnum.DELETE.getId());
+        Result<MetaReportTemplate> ret =metaReportTemplateService.uptReportTemplate(template);
+        if(!ret.hasValue()){
+            return Result.error(ret.getError());
+        }
+        return Result.success();
     }
 
     @Override
