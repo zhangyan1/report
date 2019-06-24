@@ -4,14 +4,12 @@ import com.google.gson.reflect.TypeToken;
 import com.shinemo.client.common.ListVO;
 import com.shinemo.client.common.Result;
 import com.shinemo.client.common.StatusEnum;
-import com.shinemo.client.exception.BizException;
 import com.shinemo.client.util.GsonUtil;
 import com.shinemo.report.client.base.conf.domain.MetaColumnConf;
 import com.shinemo.report.client.base.conf.domain.MetaDbConf;
 import com.shinemo.report.client.base.conf.domain.MetaParamConf;
 import com.shinemo.report.client.base.conf.domain.MetaReportTemplate;
 import com.shinemo.report.client.base.conf.query.MetaDbConfQuery;
-import com.shinemo.report.client.common.domain.DeleteStatusEnum;
 import com.shinemo.report.client.common.domain.ReportErrors;
 import com.shinemo.report.core.base.conf.service.MetaColumnConfService;
 import com.shinemo.report.core.base.conf.service.MetaDbConfService;
@@ -24,6 +22,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -58,48 +57,35 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<Void> addTemplate(TemplateRequest request){//TODO 放入一个字段里面
+    public Result<Void> addOrUptTemplate(TemplateRequest request){
 
         Assert.notNull(request,"request is null");
         Assert.notNull(request.getUserInfo(),"userInfo is null");
         Assert.notNull(request.getSourceId(),"sourceId is null");
         Assert.notNull(request.getSqlText(),"sqlText is null");
         MetaReportTemplate template = initTemplate(request);
-        Result<MetaReportTemplate> rs = metaReportTemplateService.saveReportTemplate(template);
+        Result<MetaReportTemplate> rs = null;
+        if(template.getId()!=null){
+            rs = metaReportTemplateService.saveReportTemplate(template);
+        }else{
+            rs = metaReportTemplateService.saveReportTemplate(template);
+        }
         if(!rs.hasValue()){
             return Result.error(rs.getError());
-        }
-        List<MetaColumnConf> confList = initColumnList(request,rs.getValue());
-        Result<Void> rz = metaColumnConfService.saveMetaColumnConfList(confList);
-        if(!rz.isSuccess()){
-            throw new BizException(rs.getError());
-        }
-        List<MetaParamConf> paramList = initParamList(request,rs.getValue());
-        Result<Void> rt = metaParamConfService.saveMetaParamConfList(paramList);
-        if(!rt.isSuccess()){
-            throw new BizException(rs.getError());
         }
         return Result.success();
     }
 
-    private List<MetaParamConf> initParamList(TemplateRequest request,MetaReportTemplate template) {
+    private List<MetaParamConf> initParamList(TemplateRequest request) {
         List<MetaParamConf> list = GsonUtil.fromGson2Obj(request.getParamListInfo(),new TypeToken<List<MetaParamConf>>
                 (){}.getType());
-        for(MetaParamConf iter:list){
-            iter.setStatus(DeleteStatusEnum.NORMAL.getId());
-            iter.setReportId(template.getId());
-        }
         return list;
     }
 
-    private List<MetaColumnConf> initColumnList(TemplateRequest request,MetaReportTemplate template) {
+    private List<MetaColumnConf> initColumnList(TemplateRequest request) {
 
         List<MetaColumnConf> list = GsonUtil.fromGson2Obj(request.getColumnListInfo(),new TypeToken<List<MetaColumnConf>>
                 (){}.getType());
-        for(MetaColumnConf iter:list){
-            iter.setStatus(DeleteStatusEnum.NORMAL.getId());
-            iter.setReportId(template.getId());
-        }
         return list;
     }
 
@@ -113,14 +99,12 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
         template.setMaxCount(request.getMaxCount());
         template.setSourceId(request.getSourceId());
         template.setName(request.getTemplateName());
+        template.setColumnListInfo(request.getColumnListInfo());
+        template.setParamListInfo(request.getParamListInfo());
+        template.setId(request.getTemplateId());
         return template;
     }
 
-
-    @Override
-    public Result<Void> uptTemplate(TemplateRequest request) {
-        return null;
-    }
 
     @Override
     public Result<Void> detelteTemplate(Long id) {

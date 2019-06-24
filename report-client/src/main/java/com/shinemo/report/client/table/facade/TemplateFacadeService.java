@@ -18,13 +18,7 @@ public interface TemplateFacadeService {
      * @param request
      * @return
      */
-    Result<Void> addTemplate(TemplateRequest request);
-    /**
-     * 更新模板
-     * @param request
-     * @return
-     */
-    Result<Void> uptTemplate(TemplateRequest request);
+    Result<Void> addOrUptTemplate(TemplateRequest request);
     /**
      * 删除模板
      * @param id

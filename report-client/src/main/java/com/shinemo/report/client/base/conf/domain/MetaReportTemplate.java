@@ -1,6 +1,7 @@
 package com.shinemo.report.client.base.conf.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -56,4 +57,12 @@ public class MetaReportTemplate extends BaseDO {
 	*  @see TemplateFlag 扩展标位
 	*/
 	private Long flag;
+	/**
+	 * @see List<MetaParamConf> 参数设置
+	 */
+	private String paramListInfo;
+	/**
+	 * @see List<MetaColumnConf> 列设置
+	 */
+	private String columnListInfo;
 }
