@@ -12,6 +12,8 @@ CREATE TABLE `meta_report_template` (
   `source_id` bigint not null comment '数据库源id',
   `flag` bigint not null DEFAULT 0 COMMENT '扩展标位 1-需要审核',
   `name` varchar(16) not null comment '模板名称',
+  `paramListInfo` text DEFAULT null comment '参数设置',
+  `columnListInfo` text DEFAULT  null comment '列设置',
   PRIMARY KEY (`id`),
   key `uk_report_conf` (`source_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='报表模板配置表';
