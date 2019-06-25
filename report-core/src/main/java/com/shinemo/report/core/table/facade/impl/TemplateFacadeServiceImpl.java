@@ -21,6 +21,7 @@ import com.shinemo.report.core.base.conf.service.MetaParamConfService;
 import com.shinemo.report.core.base.conf.service.MetaReportTemplateService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -127,6 +128,18 @@ public class TemplateFacadeServiceImpl implements TemplateFacadeService{
 
     @Override
     public Result<List<MetaParamConf>> getTemplateQueryParams(Long id) {
-        return null;
+        Assert.notNull(id,"templateId is null");
+        MetaReportTemplateQuery query = new MetaReportTemplateQuery();
+        query.setId(id);
+        Result<MetaReportTemplate> rs = metaReportTemplateService.getMetaReportTemplate(query);
+        if(!rs.hasValue()){
+            return Result.error(ReportErrors.TEMPLATE_NOT_EXIST);
+        }
+        MetaReportTemplate template = rs.getValue();
+        if(StringUtils.isBlank(template.getParamListInfo())){
+            List<MetaParamConf> ret = GsonUtil.fromGson2Obj(template.getParamListInfo(),new TypeToken<List<MetaParamConf>>(){}.getType());
+            return Result.success(ret);
+        }
+        return Result.success();
     }
 }
